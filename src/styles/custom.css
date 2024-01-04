@@ -1,0 +1,40 @@
+/* Dark mode colors. */
+:root {
+  --__sl-font: Rubik, var(--sl-font-system);
+  --__sl-font-mono: FiraCode, var(--sl-font-system-mono);
+  --sl-color-accent-low: #002933;
+  --sl-color-accent: #32a2b6;
+  --sl-color-accent-high: #81d7f0;
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #eeeeee;
+  --sl-color-gray-2: #c2c2c2;
+  --sl-color-gray-3: #8b8b8b;
+  --sl-color-gray-4: #585858;
+  --sl-color-gray-5: #383838;
+  --sl-color-gray-6: #272727;
+  --sl-color-black: #181818;
+}
+/* Light mode colors. */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #a4e2f5;
+  --sl-color-accent: #32a2b6;
+  --sl-color-accent-high: #003945;
+  --sl-color-white: #181818;
+  --sl-color-gray-1: #272727;
+  --sl-color-gray-2: #383838;
+  --sl-color-gray-3: #585858;
+  --sl-color-gray-4: #8b8b8b;
+  --sl-color-gray-5: #c2c2c2;
+  --sl-color-gray-6: #eeeeee;
+  --sl-color-gray-7: #f6f6f6;
+  --sl-color-black: #ffffff;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url('../fonts/Rubik.ttf') format('truetype-variations');
+}
+@font-face {
+  font-family: 'FiraCode';
+  src: url('../fonts/FiraCode.ttf') format('truetype-variations');
+}

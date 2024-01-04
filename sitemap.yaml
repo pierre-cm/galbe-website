@@ -1,0 +1,21 @@
+getting-started:
+  label: Getting Started
+  title: Getting Started
+  description: Description
+  md: getting-started.md
+api:
+  label: API
+  items:
+    routes:
+      label: Test1
+      title: Test1
+      description: Description Test1
+      md: "Guides/routes.md"
+    sub:
+      label: Sub
+      items:
+        routes:
+          label: Test2
+          title: Test2
+          description: Description Test2
+          md: "Guides/routes.md"

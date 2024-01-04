@@ -46,7 +46,6 @@ if (isGit) {
   }
 }
 const repoPath = isGit ? ".docs" : `${config?.repository}/docs`
-console.log("Git:", isGit)
 
 const sitemapStr = await Bun.file("sitemap.yaml").text()
 const sitemap = yaml.load(sitemapStr) as Record<string, any>

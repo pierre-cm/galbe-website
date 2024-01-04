@@ -19,8 +19,6 @@ const parseSitenode = (sitenode, basePath = "") => {
   return items
 }
 
-console.dir(parseSitenode(sitemap), { depth: null })
-
 // https://astro.build/config
 export default defineConfig({
   integrations: [

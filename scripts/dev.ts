@@ -1,6 +1,6 @@
 import yaml from "js-yaml"
-import { readdirSync, renameSync, existsSync, rmSync } from "fs"
-import { resolve, basename, extname } from "path"
+import { readdirSync, renameSync, existsSync, rmSync, mkdirSync } from "fs"
+import { resolve, basename, extname, dirname } from "path"
 import { watch } from "fs"
 import config from "../config"
 
@@ -72,6 +72,8 @@ const buildSitemap = async (
       if (filter?.length === 0 || filter.includes(src)) {
         let f = await Bun.file(src).text()
         f = `---\ntitle: ${val?.title}\ndescription: ${val?.description}\neditUrl: ${config.git}/blob/main/docs/${val?.md}\n---\n${f}`
+        console.log("Writing", dest)
+        mkdirSync(dirname(dest), { recursive: true })
         Bun.write(dest, f)
       }
     } else if ("items" in val) {

@@ -20,7 +20,9 @@ if (isGit) {
         "-n",
         "--depth=1",
         "--filter=tree:0",
-        config.repository,
+        config.git.token
+          ? `https://${config.git.username}:${config.git.token}@github.com/${config.git.repo}.git`
+          : `git@github.com:${config.git.repo}.git`,
         ".docs",
       ],
       stdout: "inherit",
@@ -70,7 +72,7 @@ export const buildSitemap = async (
       const dest = resolve(path, basename(src))
       if (filter?.length === 0 || filter.includes(src)) {
         let f = await Bun.file(src).text()
-        f = `---\ntitle: ${val?.title}\ndescription: ${val?.description}\neditUrl: ${config.git}/blob/main/docs/${val?.md}\n---\n${f}`
+        f = `---\ntitle: ${val?.title}\ndescription: ${val?.description}\neditUrl: https://github.com/${config.git.repo}/blob/main/docs/${val?.md}\n---\n${f}`
         console.log("Writing", dest)
         mkdirSync(dirname(dest), { recursive: true })
         Bun.write(dest, f)

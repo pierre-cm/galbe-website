@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: Build &
 
 on:
   push:
@@ -17,13 +17,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
-      - uses: withastro/action@v1
         with:
           bun-version: latest
       - name: Install
         run: bun install
       - name: Build
         run: bun run Build
+      # - uses: withastro/action@v1
 
   deploy:
     needs: build

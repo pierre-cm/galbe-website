@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: github-pages
     env:
-      GH_REPO: ${{ env.GH_REPO }}
+      GH_REPO: pierre-cm/kadre
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      KADRE_BASE: ${{ env.KADRE_BASE }}
-      KADRE_REPO: ${{ env.KADRE_REPO }}
-      KADRE_SITE: ${{ env.KADRE_SITE }}
+      KADRE_BASE: /kadre-website
+      KADRE_REPO: git@github.com:pierre-cm/kadre.git
+      KADRE_SITE: https://pierre-cm.github.io
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1

@@ -2,8 +2,8 @@ export default {
   repository: "git@github.com:pierre-cm/kadre.git",
   // repository: "../kadre",
   git: {
-    username: Bun.env.GITHUB_USER,
-    token: Bun.env.GITHUB_TOKEN,
+    username: Bun.env.GH_USER,
+    token: Bun.env.GH_TOKEN,
     repo: "pierre-cm/kadre",
   },
 }

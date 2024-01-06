@@ -15,6 +15,7 @@ jobs:
   build:
     name: Install & Build
     runs-on: ubuntu-latest
+    environment: ci
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
@@ -24,7 +25,6 @@ jobs:
         run: bun install
       - name: Build
         run: bun run build
-      # - uses: withastro/action@v1
 
   deploy:
     needs: build

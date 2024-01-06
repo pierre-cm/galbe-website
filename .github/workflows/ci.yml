@@ -19,9 +19,9 @@ jobs:
     env:
       GH_REPO: pierre-cm/kadre
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      KADRE_BASE: /kadre-website
+      KADRE_BASE: /
       KADRE_REPO: git@github.com:pierre-cm/kadre.git
-      KADRE_DOMAIN: pierre-cm.github.io
+      KADRE_DOMAIN: kadre.dev
     steps:
       - uses: actions/checkout@v4
       - name: Set domain

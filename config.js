@@ -1,8 +1,9 @@
 export default {
-  repository: "git@github.com:pierre-cm/kadre.git",
-  // repository: "../kadre",
+  repository: Bun.env.KADRE_REPO,
   git: {
     token: Bun.env.GH_TOKEN,
-    repo: "pierre-cm/kadre",
+    repo: Bun.env.GH_REPO,
   },
+  site: Bun.env.KADRE_SITE,
+  base: Bun.env.KADRE_BASE,
 }

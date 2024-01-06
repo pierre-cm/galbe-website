@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config"
 import starlight from "@astrojs/starlight"
-
+import config from "./config"
 import yaml from "js-yaml"
 import { readFileSync } from "fs"
 
@@ -21,6 +21,8 @@ const parseSitenode = (sitenode, basePath = "") => {
 
 // https://astro.build/config
 export default defineConfig({
+  site: config.site,
+  base: config.base,
   integrations: [
     starlight({
       title: "Kadre",

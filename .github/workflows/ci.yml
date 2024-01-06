@@ -21,9 +21,12 @@ jobs:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       KADRE_BASE: /kadre-website
       KADRE_REPO: git@github.com:pierre-cm/kadre.git
-      KADRE_SITE: https://pierre-cm.github.io
+      KADRE_DOMAIN: pierre-cm.github.io
     steps:
       - uses: actions/checkout@v4
+      - name: Set domain
+        run: |
+          echo $KADRE_DOMAIN > public/CNAME
       - name: Install, build, and upload
         uses: withastro/action@v1
         with:

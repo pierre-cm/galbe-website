@@ -4,6 +4,6 @@ export default {
     token: process.env.GH_TOKEN,
     repo: process.env.GH_REPO,
   },
-  site: process.env.KADRE_SITE,
+  site: `https://${process.env.KADRE_DOMAIN}`,
   base: process.env.KADRE_BASE,
 }

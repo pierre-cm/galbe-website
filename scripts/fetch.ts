@@ -13,7 +13,7 @@ if (isGit) {
     })
     await proc.exited
   } else {
-    console.log("GH_TOKEN defined ?", config?.git?.token?.[0])
+    console.log("GH_TOKEN found ?", !!config?.git?.token)
     let proc = Bun.spawn({
       cmd: [
         "git",

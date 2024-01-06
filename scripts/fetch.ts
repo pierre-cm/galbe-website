@@ -21,7 +21,7 @@ if (isGit) {
         "--depth=1",
         "--filter=tree:0",
         config.git.token
-          ? `https://${config.git.username}:${config.git.token}@github.com/${config.git.repo}.git`
+          ? `https://${config.git.token}@github.com/${config.git.repo}.git`
           : `git@github.com:${config.git.repo}.git`,
         ".docs",
       ],

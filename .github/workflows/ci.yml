@@ -27,6 +27,15 @@ jobs:
         run: bun install
       - name: Build
         run: bun run build
+      - name: Create artifact
+        run: |
+          mkdir -p artifacts
+          tar -czvf artifacts/github-pages.tar.gz -C ./dist .
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: github-pages
+          path: artifacts/github-pages.tar.gz
 
   deploy:
     needs: build

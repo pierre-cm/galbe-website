@@ -24,12 +24,7 @@ jobs:
       KADRE_SITE: https://pierre-cm.github.io
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-      - name: Checkout your repository using git
-        uses: actions/checkout@v3
-      - name: Install, build, and upload your site
+      - name: Install, build, and upload
         uses: withastro/action@v1
         with:
           path: .

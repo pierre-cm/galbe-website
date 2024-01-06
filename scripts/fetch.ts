@@ -3,7 +3,7 @@ import { readdirSync, renameSync, existsSync, rmSync, mkdirSync } from "fs"
 import { resolve, basename, extname, dirname } from "path"
 import config from "../config"
 
-const isGit = extname(config?.repository) === ".git"
+const isGit = extname(config?.repository || "") === ".git"
 if (isGit) {
   if (existsSync(".docs")) {
     let proc = Bun.spawn({

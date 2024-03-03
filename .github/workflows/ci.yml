@@ -3,7 +3,6 @@ name: Build & Deploy
 on:
   push:
     branches: [main]
-  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -17,16 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     environment: github-pages
     env:
-      GH_REPO: pierre-cm/kadre
+      GH_REPO: pierre-cm/galbe
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      KADRE_BASE: /
-      KADRE_REPO: git@github.com:pierre-cm/kadre.git
-      KADRE_DOMAIN: kadre.dev
+      GALBE_BASE: /
+      GALBE_REPO: git@github.com:pierre-cm/galbe.git
+      GALBE_DOMAIN: galbe.dev
     steps:
       - uses: actions/checkout@v4
       - name: Set domain
         run: |
-          echo $KADRE_DOMAIN > public/CNAME
+          echo $GALBE_DOMAIN > public/CNAME
       - name: Install, build, and upload
         uses: withastro/action@v1
         with:

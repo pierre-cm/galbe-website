@@ -8,6 +8,7 @@ jobs:
     name: Build & Install
     runs-on: ubuntu-latest
     env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       PUBLIC_BASE: /
       GALBE_REPO: git@github.com:pierre-cm/galbe.git
       GH_REPO: pierre-cm/galbe

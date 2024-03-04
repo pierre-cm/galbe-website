@@ -7,6 +7,10 @@ jobs:
   build:
     name: Build & Install
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_BASE: /
+      GALBE_REPO: git@github.com:pierre-cm/galbe.git
+      GH_REPO: pierre-cm/galbe
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1

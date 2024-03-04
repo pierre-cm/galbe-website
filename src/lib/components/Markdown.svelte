@@ -17,16 +17,23 @@
 	const marked = new Marked({
 		gfm: true,
 		renderer: {
+			heading: (text, level) => {
+				let content = text;
+				if (level === 2 || level === 3)
+					content = `<a href="${`#${text.toLowerCase().replace(/\s+/g, '-')}`}">${text}</a>`;
+				return `<h${level}>${content}</h${level}>`;
+			},
 			codespan: (text) => {
 				return `<code>${text}</code>`;
 			},
 			link: (href, title, text) => {
 				href = href.replace('.md', '');
-				return `<a href="${href}" title="${title || text}">${text}</a>`;
+				let target = href.match(/^http/) ? '_blank' : null;
+				return `<a href="${href}" title="${title || text}" ${target ? `target="${target}"` : ''}>${text}</a>`;
 			},
 			blockquote: (quote) => {
 				const matchAlert = quote.match(
-					new RegExp(`^<p>\\[!(${ALERT_KEYWORDS.join('|')})\\](.*)</p>`, 's')
+					new RegExp(`^<p>\\[!(${ALERT_KEYWORDS.join('|')})\\](?:<br>)?(.*)</p>`, 's')
 				);
 				if (matchAlert)
 					return `<blockquote class="alertquote ${matchAlert[1].toLowerCase()}">
@@ -110,16 +117,31 @@
 	:global(.markdown) {
 		min-width: 0;
 	}
-	:global(.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5) {
-		margin-bottom: 0;
+	:global(.markdown pre) {
+		margin-top: 1rem;
+		overflow-x: auto;
+		max-width: calc(100vw - 4rem);
+	}
+	:global(.markdown h2, .markdown h3, .markdown h4, .markdown h5) {
+		margin-top: 3rem;
+		margin-bottom: 1.5rem;
 	}
 	:global(.markdown h1, .markdown h2) {
 		padding-bottom: 0.5rem;
 		border-bottom: 1px solid var(--border);
 	}
-	:global(.markdown pre) {
-		margin-top: 1rem;
-		overflow-x: auto;
-		max-width: calc(100vw - 4rem);
+	:global(.markdown h2 a, .markdown h3 a) {
+		text-decoration: none;
+		color: var(--text);
+	}
+	:global(h2 a:hover, h3 a:hover) {
+		text-decoration: none;
+		color: var(--text);
+		cursor: default;
+	}
+	:global(h2:hover a::after, h3:hover a::after) {
+		content: ' #';
+		color: var(--text-v1);
+		cursor: pointer;
 	}
 </style>

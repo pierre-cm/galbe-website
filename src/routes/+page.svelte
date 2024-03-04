@@ -52,11 +52,21 @@
 			</div>
 			<h2>Versatile by design, simple by default.</h2>
 			<p>
-				Galbe is a fast, lightweight and highly customizable JavaScript web framework based on Bun.
+				Galbe is a fast, lightweight and highly customizable JavaScript web framework based on
+				<a href="https://bun.sh" target="_blank">Bun</a>.
 			</p>
 			<div class="buttons">
-				<a class="button fancy" href="/documentation/getting-started">Get started</a>
-				<a class="button bordered" href="https://github.com/pierre-cm/galbe">Github</a>
+				<a class="button fancy" href="/documentation/getting-started" title="Get Started">
+					Get started
+				</a>
+				<a
+					class="button bordered"
+					target="_blank"
+					href="https://github.com/pierre-cm/galbe"
+					title="Github"
+				>
+					Github
+				</a>
 			</div>
 		</div>
 		<div class="preview">
@@ -151,11 +161,8 @@
 			/>
 			<div class="feature-description">
 				<h2>Type safe</h2>
-				<p>Type inferences provided by Typescript.<br />Be always sure of what you get.</p>
-				<p>
-					Fast runtime request validations. Forget about manual validation, just define concise
-					Typebox-like schemas.
-				</p>
+				<p>Typescript static type inferences. Be always sure of what you get.</p>
+				<p>Schema Types Definitions provides fast automatic request parsing and validation.</p>
 			</div>
 		</div>
 		<div class="feature-item">
@@ -169,7 +176,7 @@
 			<div class="feature-description">
 				<h2>Extensible</h2>
 				<p>
-					Extend galbe features and capabilities by adding plugins from the
+					Extend Galbe features and capabilities by adding plugins from the
 					<a href="plugins">plugin list</a>.
 				</p>
 				<p>You do not find what you need? You can <a href="plugins">create your own</a> .</p>

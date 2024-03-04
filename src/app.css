@@ -53,6 +53,7 @@ body {
   font-family: 'OpenSans';
   color: var(--text);
   background-color: var(--background);
+  transition: all 0.3s
 }
 a{
   text-decoration: none;

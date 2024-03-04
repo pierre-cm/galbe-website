@@ -12,6 +12,7 @@
 	import node from '$lib/assets/icons/node.svg.svelte';
 	import bun from '$lib/assets/icons/bun.svg.svelte';
 	import deno from '$lib/assets/icons/deno.svg.svelte';
+	import edit from '$lib/assets/icons/edit.svg.svelte';
 
 	const ICON_MAP: Record<string, any> = {
 		default: logo,
@@ -25,7 +26,8 @@
 		cross: cross,
 		node: node,
 		bun: bun,
-		deno: deno
+		deno: deno,
+		edit: edit
 	};
 
 	const {

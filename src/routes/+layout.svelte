@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { PUBLIC_BASE } from '$env/static/public';
 	import ThemeSwitch from '$lib/components/ThemeSwitch.svelte';
+	import { blur } from 'svelte/transition';
 
 	let innerWidth = $state();
 	let menuOpen = $state(false);
@@ -13,6 +14,8 @@
 	$effect(() => {
 		menuOpen = innerWidth > 1024;
 	});
+
+	let { data } = $props();
 </script>
 
 <svelte:window bind:innerWidth />
@@ -38,7 +41,11 @@
 		</div>
 	</header>
 	<main>
-		<slot />
+		{#key data.rootSlug}
+			<div in:blur={{ delay: 200, duration: 200 }} out:blur={{ duration: 200 }}>
+				<slot />
+			</div>
+		{/key}
 	</main>
 </div>
 
@@ -46,7 +53,6 @@
 	#app {
 		display: flex;
 		flex-direction: column;
-		// max-width: calc(100vw - 4rem);
 	}
 	header {
 		position: fixed;
@@ -59,6 +65,7 @@
 		width: calc(100% - 2rem);
 		background-color: var(--background-transparent);
 		backdrop-filter: blur(4px);
+		transition: all 0.3s;
 		.logo img {
 			width: 2.5rem;
 			height: 2.5rem;
@@ -120,9 +127,6 @@
 						color: var(--primary);
 					}
 				}
-				.npm {
-					color: #c12127;
-				}
 			}
 		}
 	}
@@ -131,7 +135,6 @@
 		min-height: calc(100vh - 5rem);
 		display: flex;
 		flex-direction: column;
-		padding-bottom: 2rem;
 	}
 	@media (min-width: 1024px) {
 		header {

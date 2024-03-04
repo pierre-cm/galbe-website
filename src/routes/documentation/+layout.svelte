@@ -3,22 +3,24 @@
 	import contents from '$lib/content';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import yaml from 'js-yaml';
 
 	const META_RGX = /^---\n(.*)\n---/s;
 	const DEFAULT_PAGE = 'getting-started';
-	const QUERY_HEADERS = 'main .content h2, main .content h3, main .content h4';
+	const QUERY_HEADERS = 'main .content h2 a, main .content h3 a, main .content h4 a';
 	const aside = [
 		{ label: 'Getting started', ref: '/documentation/getting-started' },
 		{ label: 'Routes', ref: '/documentation/routes' },
 		{ label: 'Schemas', ref: '/documentation/schemas' },
 		{ label: 'Hooks', ref: '/documentation/hooks' },
 		{ label: 'Handler', ref: '/documentation/handler' },
-		{ label: 'Router', ref: '/documentation/router' },
 		{ label: 'Lifecycle', ref: '/documentation/lifecycle' },
+		{ label: 'Router', ref: '/documentation/router' },
 		{ label: 'Plugins', ref: '/documentation/plugins' }
 	];
 
-	let meta: Record<string, string> = $state({});
+	let meta: Record<string, any> = $state({});
 	let titles: { level: number; title: string; ref: string }[] = $state([]);
 	let mdCore: string = $state('');
 
@@ -27,7 +29,7 @@
 	let currentSection = $state();
 
 	const scrolling = () => {
-		const mdTitles = document.querySelectorAll('main .content h2');
+		const mdTitles = document.querySelectorAll('main .content h2 a');
 		let last = null;
 
 		for (let t of [...mdTitles]) {
@@ -49,7 +51,6 @@
 
 	$effect(() => {
 		const url = $page.url;
-
 		const loc = url.pathname.replace(/^\/documentation\/?/, '') || DEFAULT_PAGE;
 		if (loc !== currentPage) currentPage = loc;
 
@@ -72,16 +73,9 @@
 		let c = contents[currentPage];
 		if (c && c !== content) {
 			content = c;
-			let mdMetaMatch = content.match(META_RGX);
-			let _meta: typeof meta = {};
-			if (mdMetaMatch) {
-				for (let record of mdMetaMatch[1].split('\n')) {
-					let r = record.match(/^([^:]*):(.*)$/);
-					if (r) _meta[r[1].trim()] = r[2].trim();
-				}
-			}
-			meta = _meta;
 
+			let mdMetaMatch = content.match(META_RGX);
+			meta = mdMetaMatch ? (yaml.load(mdMetaMatch[1]) as Record<string, any>) : {};
 			mdCore = content.replace(META_RGX, '');
 
 			let titlesMatch = mdCore.matchAll(/\s(#+)\s+([^\n]+)/gm);
@@ -113,21 +107,42 @@
 		<div class="content">
 			<Markdown input={mdCore} />
 			<slot />
+			<div class="nav-buttons">
+				<a class="nav-button prev" class:hidden={!meta.prev} href={meta?.prev?.url}>
+					<div class="label">PREVIOUS</div>
+					<div class="title">{meta?.prev?.label}</div>
+				</a>
+				<a class="nav-button next" class:hidden={!meta.next} href={meta?.next?.url}>
+					<div class="label">NEXT</div>
+					<div class="title">{meta?.next?.label}</div>
+				</a>
+			</div>
 		</div>
+
 		<div class="aside-content">
 			<div class="aside-content-body">
 				<div class="title">On this page</div>
-				{#each titles as { level, title, ref }}
-					{#if level === 2}
-						<a
-							href={ref}
-							class:active={currentSection === title}
-							on:click={() => clickSection(title, ref)}
-						>
-							{title}
+				<div class="aside-content-items">
+					{#each titles as { level, title, ref }}
+						{#if level === 2}
+							<a
+								href={ref}
+								class:active={currentSection === title}
+								on:click={() => clickSection(title, ref)}
+							>
+								{title}
+							</a>
+						{/if}
+					{/each}
+				</div>
+				{#if meta?.editUrl}
+					<div class="editButton">
+						<a href={meta.editUrl} target="_blank">
+							<Icon name="edit" width="1rem" height="1rem" />
+							Edit on Github
 						</a>
-					{/if}
-				{/each}
+					</div>
+				{/if}
 			</div>
 		</div>
 	</main>
@@ -171,6 +186,38 @@
 				min-width: 10rem;
 				max-width: 55rem;
 				padding: 0 1.5rem 2rem 1.5rem;
+				display: flex;
+				flex-direction: column;
+				gap: 2rem;
+				.nav-buttons {
+					display: flex;
+					justify-content: space-between;
+					gap: 2rem;
+					.nav-button {
+						cursor: pointer;
+						padding: 1rem;
+						border: 1px solid var(--text-v1);
+						border-radius: 0.5rem;
+						flex-basis: 100%;
+						display: flex;
+						flex-direction: column;
+						&:hover {
+							border-color: var(--primary);
+							color: var(--primary);
+							text-decoration: none;
+						}
+						&.next {
+							align-items: flex-end;
+						}
+						&.hidden {
+							visibility: hidden;
+						}
+						.label {
+							font-size: 0.8rem;
+							color: var(--text-v1);
+						}
+					}
+				}
 			}
 			.aside-content {
 				position: relative;
@@ -181,22 +228,26 @@
 					display: flex;
 					position: fixed;
 					flex-direction: column;
+					gap: 1rem;
 					font-size: 0.9rem;
 					min-width: 15rem;
 					height: 100%;
 					padding: 1rem 2rem 1rem 2rem;
 					.title {
 						font-weight: 600;
-						margin-bottom: 1rem;
 					}
-					a {
-						text-decoration: none;
-						color: var(--text);
-						padding: 0.5rem;
-						border-left: 2px solid var(--border);
-						&.active {
-							border-left-color: var(--primary);
-							color: var(--primary);
+					.aside-content-items {
+						display: flex;
+						flex-direction: column;
+						& > a {
+							text-decoration: none;
+							color: var(--text);
+							padding: 0.5rem;
+							border-left: 2px solid var(--border);
+							&.active {
+								border-left-color: var(--primary);
+								color: var(--primary);
+							}
 						}
 					}
 				}

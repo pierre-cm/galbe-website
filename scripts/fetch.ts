@@ -62,6 +62,8 @@ export const buildSitemap = async (
 			editUrl?: string;
 			md?: string;
 			items?: any;
+			next?: { label: string; url: string };
+			prev?: { label: string; url: string };
 		}
 	>,
 	path: string,
@@ -73,7 +75,7 @@ export const buildSitemap = async (
 			const dest = resolve(path, basename(src));
 			if (filter?.length === 0 || filter.includes(src)) {
 				let f = await Bun.file(src).text();
-				f = `---\ntitle: ${val?.title}\ndescription: ${val?.description}\neditUrl: https://github.com/${config.git.repo}/blob/main/docs/${val?.md}\n---\n${f}`;
+				f = `---\n${yaml.dump(val, { indent: 2 })}\neditUrl: https://github.com/${config.git.repo}/blob/main/docs/${val?.md}\n---\n${f}`;
 				console.log('Writing', dest);
 				mkdirSync(dirname(dest), { recursive: true });
 				Bun.write(dest, f);

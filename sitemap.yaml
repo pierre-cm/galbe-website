@@ -1,35 +1,65 @@
 getting-started:
   label: Getting Started
-  title: Getting Started
-  description: Getting Started
   md: getting-started.md
-handler:
-  label: Handler
-  title: Handler
-  description: Handler
-  md: handler.md
-hooks:
-  label: Hooks
-  title: Hooks
-  description: Hooks
-  md: hooks.md
-plugins:
-  label: Plugins
-  title: Plugins
-  description: Plugins
-  md: plugins.md
-router:
-  label: Router
-  title: Router
-  description: Router
-  md: router.md
+  next:
+    label: Routes
+    url: /documentation/routes
 routes:
   label: Routes
-  title: Routes
-  description: Routes
   md: routes.md
+  prev:
+    label: Getting Started
+    url: /documentation/getting-started
+  next:
+    label: Schemas
+    url: /documentation/schemas
 schemas:
   label: Schemas
-  title: Schemas
-  description: Schemas
   md: schemas.md
+  prev:
+    label: Routes
+    url: /documentation/routes
+  next:
+    label: Hooks
+    url: /documentation/hooks
+hooks:
+  label: Hooks
+  md: hooks.md
+  prev:
+    label: Schemas
+    url: /documentation/schemas
+  next:
+    label: Handler
+    url: /documentation/handler
+handler:
+  label: Handler
+  md: handler.md
+  prev:
+    label: Hooks
+    url: /documentation/hooks
+  next:
+    label: Lifecycle
+    url: /documentation/lifecycle
+lifecycle:
+  label: Lifecycle
+  prev:
+    label: Handler
+    url: /documentation/handler
+  next:
+    label: Router
+    url: /documentation/router
+router:
+  label: Router
+  md: router.md
+  prev:
+    label: Lifecycle
+    url: /documentation/lifecycle
+  next:
+    label: Plugins
+    url: /documentation/plugins
+plugins:
+  label: Plugins
+  md: plugins.md
+  prev:
+    label: Router
+    url: /documentation/router

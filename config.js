@@ -1,9 +1,9 @@
 export default {
-  repository: process.env.KADRE_REPO,
-  git: {
-    token: process.env.GH_TOKEN,
-    repo: process.env.GH_REPO,
-  },
-  site: `https://${process.env.KADRE_DOMAIN}`,
-  base: process.env.KADRE_BASE,
-}
+	repository: Bun.env.GALBE_REPO,
+	git: {
+		token: Bun.env.GH_TOKEN,
+		repo: Bun.env.GH_REPO
+	},
+	site: `https://${Bun.env.GALBE_DOMAIN}`,
+	base: Bun.env.GALBE_BASE
+};

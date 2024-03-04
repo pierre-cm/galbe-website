@@ -1,21 +1,65 @@
 getting-started:
   label: Getting Started
-  title: Getting Started
-  description: Description
   md: getting-started.md
-api:
-  label: API
-  items:
-    routes:
-      label: Test1
-      title: Test1
-      description: Description Test1
-      md: "Guides/routes.md"
-    sub:
-      label: Sub
-      items:
-        routes:
-          label: Test2
-          title: Test2
-          description: Description Test2
-          md: "Guides/routes.md"
+  next:
+    label: Routes
+    url: /documentation/routes
+routes:
+  label: Routes
+  md: routes.md
+  prev:
+    label: Getting Started
+    url: /documentation/getting-started
+  next:
+    label: Schemas
+    url: /documentation/schemas
+schemas:
+  label: Schemas
+  md: schemas.md
+  prev:
+    label: Routes
+    url: /documentation/routes
+  next:
+    label: Hooks
+    url: /documentation/hooks
+hooks:
+  label: Hooks
+  md: hooks.md
+  prev:
+    label: Schemas
+    url: /documentation/schemas
+  next:
+    label: Handler
+    url: /documentation/handler
+handler:
+  label: Handler
+  md: handler.md
+  prev:
+    label: Hooks
+    url: /documentation/hooks
+  next:
+    label: Lifecycle
+    url: /documentation/lifecycle
+lifecycle:
+  label: Lifecycle
+  prev:
+    label: Handler
+    url: /documentation/handler
+  next:
+    label: Router
+    url: /documentation/router
+router:
+  label: Router
+  md: router.md
+  prev:
+    label: Lifecycle
+    url: /documentation/lifecycle
+  next:
+    label: Plugins
+    url: /documentation/plugins
+plugins:
+  label: Plugins
+  md: plugins.md
+  prev:
+    label: Router
+    url: /documentation/router

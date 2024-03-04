@@ -1,0 +1,111 @@
+@font-face {
+  font-family: 'Rubik';
+  src: url('/fonts/Rubik.ttf') format('truetype-variations');
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/OpenSans.ttf') format('truetype-variations');
+}
+
+@font-face {
+  font-family: 'FiraCode';
+  src: url('/fonts/FiraCode.ttf') format('truetype-variations');
+}
+
+:root, html[data-theme='light'] {
+  --text: #303030;
+  --text-v1: #7c7c7c;
+  --border: #e2e2e2;
+  --background: #ffffff;
+  --background-transparent: #fff8;
+  --background-v1: #f1f1f1;
+  --background-v2: #f7f2e8;
+
+  --primary: #559ce8;
+  --primary-dark: #258092;
+  --secondary: #5eefc7;
+
+  --fancy-primary-bg: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+
+  --info: var(--primary);
+  --success: #79b900;
+  --warning: #ffa013;
+  --danger: #c22424;
+
+  --white: #ffffff;
+  --grey: #bebebe;
+  --purple: #892ce0;
+}
+
+html[data-theme='dark'] {
+  --text: #eeeeee;
+  --text-v1: #a3a3a3;
+  --border: #363636;
+  --background: #272727;
+  --background-transparent: #27272788;
+  --background-v1: #181818;
+  --background-v2: #3c3f42;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'OpenSans';
+  color: var(--text);
+  background-color: var(--background);
+  transition: all 0.3s
+}
+a{
+  text-decoration: none;
+  color: var(--primary);
+}
+a:hover {
+  text-decoration: underline;
+  color: var(--purple);
+}
+pre, code {
+  font-family: 'FiraCode';
+}
+code {
+  display: block;
+  white-space: pre-wrap;
+  overflow: auto;
+  min-width: 0px;
+}
+.button {
+  background-color: #0000;
+  border: none;
+  font-size: 1.2rem;
+  border-radius: 0.33rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.button > a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+@property --p {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 100%;
+}
+.button.fancy {
+  --a:45deg;
+  --p:100%;
+  background: linear-gradient(var(--a), var(--primary) 0%, var(--secondary) var(--p));
+  color: #303030;
+  transition: --p 0.2s;
+  &:hover{
+    --p: 0%;
+  }
+}
+.button.primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+.button.bordered {
+  border: 2px solid var(--primary);
+}

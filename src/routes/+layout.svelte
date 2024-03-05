@@ -23,9 +23,9 @@
 <div id="app">
 	<header>
 		<div class="logo">
-			<a href={PUBLIC_BASE}><img src="galbe.svg" alt="logo" /></a>
+			<a href="/"><img src="/galbe.svg" alt="logo" /></a>
 		</div>
-		<div class="title"><a href={PUBLIC_BASE}>Galbe</a></div>
+		<div class="title"><a href="/">Galbe</a></div>
 		<div class="menu" class:open={menuOpen}>
 			<button class="burger" on:click={triggerMenu}>
 				<Icon name={menuOpen ? 'cross' : 'burger'} />
@@ -60,7 +60,7 @@
 		z-index: 10;
 		padding: 0.5rem 1rem 0.5rem 1rem;
 		display: flex;
-		gap: 1rem;
+		gap: 0rem;
 		align-items: center;
 		width: calc(100% - 2rem);
 		background-color: var(--background-transparent);

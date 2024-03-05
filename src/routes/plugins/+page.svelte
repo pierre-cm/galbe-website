@@ -3,6 +3,10 @@
 	// import md from '$lib/assets/imported/home.md?raw';
 </script>
 
+<svelte:head>
+	<title>Galbe | Plugins</title>
+</svelte:head>
+
 <div class="page">
 	<h1>Plugins</h1>
 	<div class="content">

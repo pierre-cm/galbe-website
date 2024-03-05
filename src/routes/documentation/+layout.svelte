@@ -93,6 +93,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Galbe | Doc</title>
+</svelte:head>
+
 <svelte:window on:scroll={scrolling} />
 
 <div class="page">

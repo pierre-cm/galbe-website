@@ -41,6 +41,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Galbe</title>
+</svelte:head>
+
 <svelte:window on:scroll={scrollPreview} />
 
 <div class="main">

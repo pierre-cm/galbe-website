@@ -116,10 +116,10 @@
 			<div class="feature-description">
 				<h2>Versatile</h2>
 				<p>
-					A clear and concise, yet feature-rich API.<br />Every feature is optional and easily
-					configurable.
+					A clear, concise, and feature-rich API that is easy to use and highly configurable. Every
+					feature is optional and can be easily customized to meet your specific needs.
 				</p>
-				<p>Shape your API project structure to your needs.</p>
+				<p>Structure your API project in a way that works best for you and your team.</p>
 			</div>
 		</div>
 		<div class="feature-item">
@@ -165,8 +165,14 @@
 			/>
 			<div class="feature-description">
 				<h2>Type safe</h2>
-				<p>Typescript static type inferences. Be always sure of what you get.</p>
-				<p>Schema Types Definitions provides fast automatic request parsing and validation.</p>
+				<p>
+					Take advantage of TypeScript's static type inference to ensure type safety and catch
+					errors early in the development process.
+				</p>
+				<p>
+					Use schema type definitions for fast and automatic request parsing and validation,
+					ensuring that your API always receives valid data.
+				</p>
 			</div>
 		</div>
 		<div class="feature-item">
@@ -180,10 +186,14 @@
 			<div class="feature-description">
 				<h2>Extensible</h2>
 				<p>
-					Extend Galbe features and capabilities by adding plugins from the
+					Extend the features and capabilities of Galbe by choosing from our
 					<a href="plugins">plugin list</a>.
 				</p>
-				<p>You do not find what you need? You can <a href="plugins">create your own</a> .</p>
+				<p>
+					Can't find what you're looking for? No problem - you can easily <a href="plugins"
+						>create your own plugin</a
+					> to meet your specific needs.
+				</p>
 			</div>
 		</div>
 	</div>

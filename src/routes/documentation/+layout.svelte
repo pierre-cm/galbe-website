@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Markdown from '$lib/components/Markdown.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 	import contents from '$lib/content';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
@@ -10,14 +11,14 @@
 	const DEFAULT_PAGE = 'getting-started';
 	const QUERY_HEADERS = 'main .content h2 a, main .content h3 a, main .content h4 a';
 	const aside = [
-		{ label: 'Getting started', ref: '/documentation/getting-started' },
-		{ label: 'Routes', ref: '/documentation/routes' },
-		{ label: 'Schemas', ref: '/documentation/schemas' },
-		{ label: 'Hooks', ref: '/documentation/hooks' },
-		{ label: 'Handler', ref: '/documentation/handler' },
-		{ label: 'Lifecycle', ref: '/documentation/lifecycle' },
-		{ label: 'Router', ref: '/documentation/router' },
-		{ label: 'Plugins', ref: '/documentation/plugins' }
+		{ title: 'Getting started', ref: '/documentation/getting-started' },
+		{ title: 'Routes', ref: '/documentation/routes' },
+		{ title: 'Schemas', ref: '/documentation/schemas' },
+		{ title: 'Hooks', ref: '/documentation/hooks' },
+		{ title: 'Handler', ref: '/documentation/handler' },
+		{ title: 'Lifecycle', ref: '/documentation/lifecycle' },
+		{ title: 'Router', ref: '/documentation/router' },
+		{ title: 'Plugins', ref: '/documentation/plugins' }
 	];
 
 	let meta: Record<string, any> = $state({});
@@ -93,9 +94,11 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Galbe | Doc</title>
-</svelte:head>
+<Meta
+	title={`${meta.title ? `${meta.title} | ` : ''}Galbe Doc`}
+	description={meta.description ||
+		'Documentation for in-depth guidance on using our Galbe framework. Find detailed explanations, code examples, and best practices to help you build fast and versatile backend servers.'}
+/>
 
 <svelte:window on:scroll={scrolling} />
 
@@ -103,8 +106,8 @@
 	<main>
 		<aside>
 			<nav>
-				{#each aside as { ref, label }}
-					<a href={ref} class:active={$page.url.pathname === ref}>{label}</a>
+				{#each aside as { ref, title }}
+					<a href={ref} class:active={$page.url.pathname === ref}>{title}</a>
 				{/each}
 			</nav>
 		</aside>
@@ -114,11 +117,11 @@
 			<div class="nav-buttons">
 				<a class="nav-button prev" class:hidden={!meta.prev} href={meta?.prev?.url}>
 					<div class="label">PREVIOUS</div>
-					<div class="title">{meta?.prev?.label}</div>
+					<div class="title">{meta?.prev?.title}</div>
 				</a>
 				<a class="nav-button next" class:hidden={!meta.next} href={meta?.next?.url}>
 					<div class="label">NEXT</div>
-					<div class="title">{meta?.next?.label}</div>
+					<div class="title">{meta?.next?.title}</div>
 				</a>
 			</div>
 		</div>

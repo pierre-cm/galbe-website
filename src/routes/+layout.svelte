@@ -19,31 +19,26 @@
 </script>
 
 <svelte:head>
-	<title>Galbe</title>
-	<meta property="og:title" content="Galbe" />
-	<meta property="og:type" content="website" />
-	<meta property="og:locale" content="en_US" />
-	<meta property="og:image" content="https://galbe.dev/galbe-title.png" />
 	<script type="application/ld+json">
-{
-	"@context": "https://schema.org",
-	"@type": "WebSite",
-	"name": "Galbe",
-	"alternateName": "Galbe",
-	"url": "https://galbe.dev"
-}
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "Galbe",
+		"alternateName": "Galbe",
+		"url": "https://galbe.dev"
+	}
 	</script>
 	<script type="application/ld+json">
-{
-	"@context": "https://schema.org",
-	"@type": "Organization",
-	"name": "Galbe",
-	"url": "https://galbe.dev",
-	"logo": "https://galve.dev/logo.png",
-	"alternateName": "Galbe",
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "Galbe",
+		"url": "https://galbe.dev",
+		"logo": "https://galve.dev/logo.png",
+		"alternateName": "Galbe",
 
-	"description": "A fast and versatile JavaScript web framework"
-}
+		"description": "A fast and versatile JavaScript web framework"
+	}
 	</script>
 </svelte:head>
 
@@ -94,9 +89,12 @@
 		width: calc(100% - 2rem);
 		background-color: var(--background-transparent);
 		backdrop-filter: blur(4px);
-		.logo img {
-			width: 2.5rem;
-			height: 2.5rem;
+		.logo {
+			margin-right: 1rem;
+			img {
+				width: 2.5rem;
+				height: 2.5rem;
+			}
 		}
 		.title a {
 			text-decoration: none;
@@ -168,6 +166,9 @@
 		header {
 			flex-direction: row;
 			gap: 1rem;
+			.logo {
+				margin-right: 0rem;
+			}
 			.menu {
 				width: fit-content;
 				flex-direction: row;

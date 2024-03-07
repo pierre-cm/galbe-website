@@ -1,65 +1,68 @@
 getting-started:
-  label: Getting Started
+  title: Getting Started
+  description: Get started with Galbe. Follow our step-by-step guide to set up your development environment, create your first project, and learn the basics of building fast and versatile backend servers.
   md: getting-started.md
   next:
-    label: Routes
+    title: Routes
     url: /documentation/routes
 routes:
-  label: Routes
+  title: Routes
+  description: "Learn how to define and manage routes in Galbe. Discover how to define routes to create flexible and scalable backend applications."
   md: routes.md
   prev:
-    label: Getting Started
+    title: Getting Started
     url: /documentation/getting-started
   next:
-    label: Schemas
+    title: Schemas
     url: /documentation/schemas
 schemas:
-  label: Schemas
+  title: Schemas
+  description: "Discover data validation and modeling with Galbe's Schema system. Learn how to define, validate, and transform data structures to ensure consistency and accuracy in your backend applications."
   md: schemas.md
   prev:
-    label: Routes
+    title: Routes
     url: /documentation/routes
   next:
-    label: Hooks
+    title: Hooks
     url: /documentation/hooks
 hooks:
-  label: Hooks
+  title: Hooks
   md: hooks.md
   prev:
-    label: Schemas
+    title: Schemas
     url: /documentation/schemas
   next:
-    label: Handler
+    title: Handler
     url: /documentation/handler
 handler:
-  label: Handler
+  title: Handler
   md: handler.md
   prev:
-    label: Hooks
+    title: Hooks
     url: /documentation/hooks
   next:
-    label: Lifecycle
+    title: Lifecycle
     url: /documentation/lifecycle
 lifecycle:
-  label: Lifecycle
+  title: Lifecycle
   prev:
-    label: Handler
+    title: Handler
     url: /documentation/handler
   next:
-    label: Router
+    title: Router
     url: /documentation/router
 router:
-  label: Router
+  title: Router
   md: router.md
   prev:
-    label: Lifecycle
+    title: Lifecycle
     url: /documentation/lifecycle
   next:
-    label: Plugins
+    title: Plugins
     url: /documentation/plugins
 plugins:
-  label: Plugins
+  title: Plugins
   md: plugins.md
   prev:
-    label: Router
+    title: Router
     url: /documentation/router

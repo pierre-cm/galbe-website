@@ -8,6 +8,7 @@
 	import Code from '$lib/components/Code.svelte';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import CopyButton from '$lib/components/CopyButton.svelte';
+	import Meta from '$lib/components/Meta.svelte';
 
 	hljs.registerLanguage('js', javascript);
 	hljs.registerLanguage('ts', typescript);
@@ -41,19 +42,10 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Galbe</title>
-	<meta property="og:title" content="Galbe" />
-	<meta
-		name="description"
-		content="Galbe is a JavaScript webframework based on Bun. Create fast and versatile backend servers with Galbe."
-	/>
-	<meta
-		property="og:description"
-		content="Galbe is a JavaScript webframework based on Bun. Create fast and versatile backend servers with Galbe."
-	/>
-	<meta property="og:url" content="https://galbe.dev" />
-</svelte:head>
+<Meta
+	title="Galbe"
+	description="Galbe is a JavaScript webframework based on Bun. Create fast and versatile backend servers with Galbe."
+/>
 
 <svelte:window on:scroll={scrollPreview} />
 

@@ -1,17 +1,15 @@
-<script lang="ts">
-	import Markdown from '$lib/components/Markdown.svelte';
-	// import md from '$lib/assets/imported/home.md?raw';
+<script lang="ts" se>
+	import Meta from '$lib/components/Meta.svelte';
 </script>
 
-<svelte:head>
-	<title>Galbe | Plugins</title>
-</svelte:head>
+<Meta
+	title="Plugins | Galbe"
+	description="Enhance your web development experience and unlock new features by exploring Galbe plugins collection. Improve productivity and create versatile applications with ease."
+/>
 
 <div class="page">
 	<h1>Plugins</h1>
-	<div class="content">
-		<!-- <Markdown input={md} /> -->
-	</div>
+	<div class="content"></div>
 </div>
 
 <style lang="scss">

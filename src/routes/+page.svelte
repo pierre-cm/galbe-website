@@ -43,6 +43,16 @@
 
 <svelte:head>
 	<title>Galbe</title>
+	<meta property="og:title" content="Galbe" />
+	<meta
+		name="description"
+		content="Galbe is a JavaScript webframework based on Bun. Create fast and versatile backend servers with Galbe."
+	/>
+	<meta
+		property="og:description"
+		content="Galbe is a JavaScript webframework based on Bun. Create fast and versatile backend servers with Galbe."
+	/>
+	<meta property="og:url" content="https://galbe.dev" />
 </svelte:head>
 
 <svelte:window on:scroll={scrollPreview} />

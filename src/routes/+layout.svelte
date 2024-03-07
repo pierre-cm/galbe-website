@@ -18,6 +18,35 @@
 	let { data } = $props();
 </script>
 
+<svelte:head>
+	<title>Galbe</title>
+	<meta property="og:title" content="Galbe" />
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:image" content="https://galbe.dev/galbe-title.png" />
+	<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"name": "Galbe",
+	"alternateName": "Galbe",
+	"url": "https://galbe.dev"
+}
+	</script>
+	<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	"name": "Galbe",
+	"url": "https://galbe.dev",
+	"logo": "https://galve.dev/logo.png",
+	"alternateName": "Galbe",
+
+	"description": "A fast and versatile JavaScript web framework"
+}
+	</script>
+</svelte:head>
+
 <svelte:window bind:innerWidth />
 
 <div id="app">
@@ -65,7 +94,6 @@
 		width: calc(100% - 2rem);
 		background-color: var(--background-transparent);
 		backdrop-filter: blur(4px);
-		transition: all 0.3s;
 		.logo img {
 			width: 2.5rem;
 			height: 2.5rem;

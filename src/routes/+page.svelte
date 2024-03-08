@@ -43,7 +43,7 @@
 </script>
 
 <Meta
-	title="Galbe"
+	title="Galbe - Versatile Javascript web framework"
 	description="Galbe is a versatile JavaScript web framework built on Bun. Create fast, scalable, and adaptable backend servers effortlessly with Galbe's robust features and intuitive API."
 />
 
@@ -59,7 +59,7 @@
 			<h2>Versatile by design, simple by default.</h2>
 			<p>
 				Galbe is a fast, lightweight and highly customizable JavaScript web framework based on
-				<a href="https://bun.sh" target="_blank">Bun</a>.
+				<a href="https://bun.sh" target="_blank" rel="noopener noreferrer">Bun</a>.
 			</p>
 			<div class="buttons">
 				<a class="button fancy" href="/documentation/getting-started" title="Get Started">

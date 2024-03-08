@@ -28,8 +28,8 @@
 			},
 			link: (href, title, text) => {
 				href = href.replace('.md', '');
-				let target = href.match(/^http/) ? '_blank' : null;
-				return `<a href="${href}" title="${title || text}" ${target ? `target="${target}"` : ''}>${text}</a>`;
+				let target = href.match(/^http/) ? 'taget="_blank" rel="noopener noreferrer"' : '';
+				return `<a href="${href}" title="${title || text}" ${target}>${text}</a>`;
 			},
 			blockquote: (quote) => {
 				const matchAlert = quote.match(

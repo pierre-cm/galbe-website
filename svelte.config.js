@@ -7,7 +7,8 @@ const config = {
 	kit: {
 		adapter: adapter({
 			out: 'dist',
-			envPrefix: 'GALBE_'
+			envPrefix: 'GALBE_',
+			precompress: true
 		})
 	}
 };

@@ -144,7 +144,7 @@
 				</div>
 				{#if meta?.editUrl}
 					<div class="editButton">
-						<a href={meta.editUrl} target="_blank">
+						<a href={meta.editUrl} target="_blank" rel="noopener noreferrer">
 							<Icon name="edit" width="1rem" height="1rem" />
 							Edit on Github
 						</a>

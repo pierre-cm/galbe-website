@@ -41,7 +41,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ env.GITHUB_SHA }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ github.sha }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
       - name: Deploy website
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -49,5 +49,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_VPS_PRIVATE_KEY }}
           script: |
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ env.GITHUB_SHA }}
-            docker service update --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ env.GITHUB_SHA }} website
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ github.sha }}
+            docker service update --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ github.sha }} website

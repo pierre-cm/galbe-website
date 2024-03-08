@@ -44,7 +44,7 @@
 
 <Meta
 	title="Galbe - Versatile Javascript web framework"
-	description="Galbe is a versatile JavaScript web framework built on Bun. Create fast, scalable, and adaptable backend servers effortlessly with Galbe's robust features and intuitive API."
+	description="Galbe is a JavaScript webframework based on Bun. Create fast and versatile backend servers with Galbe."
 />
 
 <svelte:window on:scroll={scrollPreview} />

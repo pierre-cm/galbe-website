@@ -22,14 +22,15 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-      - name: Extract version from package.json
-        run: |
-          VERSION=$(jq -r '.version' package.json)-$(git rev-parse --short HEAD)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Install
         run: bun install
       - name: Build
         run: bun run build
+      - name: Compute version
+        run: |
+          cd .docs
+          VERSION=$(jq -r '.version' package.json)-$(git rev-parse --short HEAD)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:

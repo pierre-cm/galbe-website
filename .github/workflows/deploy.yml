@@ -14,6 +14,7 @@ jobs:
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      COMMIT_SHA: ${{ github.sha::7 }}
     permissions:
       contents: read
       packages: write
@@ -41,7 +42,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ github.sha }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-${{ env.COMMIT_SHA }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
       - name: Deploy website
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -49,5 +50,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_VPS_PRIVATE_KEY }}
           script: |
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ github.sha }}
-            docker service update --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}+${{ github.sha }} website
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-${{ env.COMMIT_SHA }}
+            docker service update --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-${{ env.COMMIT_SHA }} website

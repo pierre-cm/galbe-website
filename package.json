@@ -1,6 +1,6 @@
 {
   "name": "galbe-website",
-  "version": "0.1.0",
+  "version": "0.1.0+1234567",
   "private": true,
   "type": "module",
   "scripts": {
@@ -33,7 +33,8 @@
     "svelte-check": "^3.6.0",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
-    "vite": "^5.0.3"
+    "vite": "^5.0.3",
+    "yargs": "^17.7.2"
   },
   "dependencies": {
     "highlight.js": "^11.9.0",
@@ -41,5 +42,7 @@
     "prompteur": "^1.0.8",
     "three": "^0.161.0"
   },
-  "trustedDependencies": ["prompteur"]
+  "trustedDependencies": [
+    "prompteur"
+  ]
 }

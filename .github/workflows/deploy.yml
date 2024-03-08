@@ -28,8 +28,7 @@ jobs:
         run: bun run build
       - name: Compute version
         run: |
-          cd .docs
-          VERSION=$(jq -r '.version' package.json)-$(git rev-parse --short HEAD)
+          VERSION=$(jq -r '.version' package.json)-$(env PWD=./.docs git rev-parse --short HEAD)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Log in to the Container registry
         uses: docker/login-action@v3

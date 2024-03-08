@@ -8,7 +8,6 @@ jobs:
     name: Build, install & release
     runs-on: ubuntu-latest
     env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       PUBLIC_BASE: /
       GALBE_REPO: git@github.com:pierre-cm/galbe.git
       GH_REPO: pierre-cm/galbe
@@ -36,18 +35,18 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GH_TOKEN }}
-      # - name: Extract metadata (tags, labels) for Docker
-      #   id: meta
-      #   uses: docker/metadata-action@v5
-      #   with:
-      #     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          # labels: ${{ steps.meta.outputs.labels }}
-  # TODO: deploy. Use ssh to connect to remote server + docker pull latest image + docker swarm service
-  # See docker swarm to ease depoyment!
-  # deploy:
+      - name: Deploy website
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_VPS_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+            docker service update --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }} website

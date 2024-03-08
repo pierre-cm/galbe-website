@@ -3,13 +3,9 @@
 
 	const {
 		title = 'Galbe',
-		description = "Galbe is a versatile JavaScript web framework built on Bun. Create fast, scalable, and adaptable backend servers effortlessly with Galbe's robust features and intuitive API.",
+		description = 'Galbe is a JavaScript webframework based on Bun. Create fast and versatile backend servers with Galbe.',
 		image = 'http://galbe.dev/galbe-title.png'
 	} = $props<{ title?: string; description?: string; image?: string }>();
-
-	$effect(() => {
-		console.log(title, description);
-	});
 
 	const href = $derived(`https://galbe.dev${$page.url.pathname}`);
 </script>

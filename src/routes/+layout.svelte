@@ -60,7 +60,9 @@
 			</nav>
 			<ThemeSwitch width="1.75rem" height="1.75rem" />
 			<div class="social">
-				<a href="https://github.com/pierre-cm/galbe" target="_blank"><Icon name="github" /></a>
+				<a href="https://github.com/pierre-cm/galbe" target="_blank" rel="noopener noreferrer">
+					<Icon name="github" />
+				</a>
 			</div>
 		</div>
 	</header>

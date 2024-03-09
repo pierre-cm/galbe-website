@@ -1,14 +1,11 @@
 <script setup>
 	import '../app.css';
 	import Icon from '$lib/components/Icon.svelte';
-	import { page } from '$app/stores';
-	import { PUBLIC_BASE } from '$env/static/public';
 	import ThemeSwitch from '$lib/components/ThemeSwitch.svelte';
 	import { blur } from 'svelte/transition';
 
 	let innerWidth = $state();
 	let menuOpen = $state(false);
-	const currentPage = $derived($page.url.pathname.replace(new RegExp(`^${PUBLIC_BASE}`), ''));
 	const triggerMenu = () => (menuOpen = !menuOpen);
 
 	$effect(() => {
@@ -55,8 +52,8 @@
 				<Icon name={menuOpen ? 'cross' : 'burger'} />
 			</button>
 			<nav>
-				<a href="/documentation" class:active={currentPage === `/documentation`}>Documentation</a>
-				<a href="/plugins" class:active={currentPage === `/plugins`}>Plugins</a>
+				<a href="/documentation" class:active={data.rootSlug === `documentation`}>Documentation</a>
+				<a href="/plugins" class:active={data.rootSlug === `plugins`}>Plugins</a>
 			</nav>
 			<ThemeSwitch width="1.75rem" height="1.75rem" />
 			<div class="social">

@@ -48,9 +48,4 @@
 {/if}
 
 <style>
-	:global(svg) {
-		/* width: 1.75rem;
-		height: 1.75rem; */
-		pointer-events: none;
-	}
 </style>

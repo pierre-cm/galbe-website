@@ -10,3 +10,4 @@ node_modules/
 .DS_Store
 
 src/lib/contents
+src/lib/content.ts

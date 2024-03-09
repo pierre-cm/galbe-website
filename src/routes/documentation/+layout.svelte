@@ -12,14 +12,18 @@
 	const QUERY_HEADERS = 'main .content h2 a, main .content h3 a, main .content h4 a';
 	const aside = [
 		{ title: 'Getting started', ref: '/documentation/getting-started' },
+		{ title: 'Lifecycle', ref: '/documentation/lifecycle' },
+		{ separator: true },
+		{ title: 'Configuration', ref: '/documentation/configuration' },
+		{ title: 'Router', ref: '/documentation/router' },
+		{ title: 'Error Handler', ref: '/documentation/error-handler' },
+		{ separator: true },
 		{ title: 'Routes', ref: '/documentation/routes' },
 		{ title: 'Schemas', ref: '/documentation/schemas' },
 		{ title: 'Hooks', ref: '/documentation/hooks' },
 		{ title: 'Handler', ref: '/documentation/handler' },
 		{ title: 'Context', ref: '/documentation/context' },
-		{ title: 'Lifecycle', ref: '/documentation/lifecycle' },
-		{ title: 'Router', ref: '/documentation/router' },
-		{ title: 'Error Handler', ref: '/documentation/error-handler' },
+		{ separator: true },
 		{ title: 'Plugins', ref: '/documentation/plugins' }
 	];
 
@@ -108,20 +112,26 @@
 	<main>
 		<aside>
 			<nav>
-				{#each aside as { ref, title }}
-					<a href={ref} class:active={$page.url.pathname === ref}>{title}</a>
+				{#each aside as { ref, title, separator }}
+					{#if separator}
+						<div class="separator" />
+					{:else}
+						<a href={ref} class:active={$page.url.pathname === ref}>{title}</a>
+					{/if}
 				{/each}
 			</nav>
 		</aside>
 		<div class="content">
-			<Markdown input={mdCore} />
+			{#if mdCore?.trim()}
+				<Markdown input={mdCore} />
+			{/if}
 			<slot />
 			<div class="nav-buttons">
-				<a class="nav-button prev" class:hidden={!meta.prev} href={meta?.prev?.url}>
+				<a class="nav-button prev" class:hidden={!meta.prev} href={meta?.prev?.path}>
 					<div class="label">PREVIOUS</div>
 					<div class="title">{meta?.prev?.title}</div>
 				</a>
-				<a class="nav-button next" class:hidden={!meta.next} href={meta?.next?.url}>
+				<a class="nav-button next" class:hidden={!meta.next} href={meta?.next?.path}>
 					<div class="label">NEXT</div>
 					<div class="title">{meta?.next?.title}</div>
 				</a>
@@ -130,20 +140,22 @@
 
 		<div class="aside-content">
 			<div class="aside-content-body">
-				<div class="title">On this page</div>
-				<div class="aside-content-items">
-					{#each titles as { level, title, ref }}
-						{#if level === 2}
-							<a
-								href={ref}
-								class:active={currentSection === title}
-								on:click={() => clickSection(title, ref)}
-							>
-								{title}
-							</a>
-						{/if}
-					{/each}
-				</div>
+				{#if titles?.filter((t) => t.level === 2)?.length}
+					<div class="title">On this page</div>
+					<div class="aside-content-items">
+						{#each titles as { level, title, ref }}
+							{#if level === 2}
+								<a
+									href={ref}
+									class:active={currentSection === title}
+									on:click={() => clickSection(title, ref)}
+								>
+									{title}
+								</a>
+							{/if}
+						{/each}
+					</div>
+				{/if}
 				{#if meta?.editUrl}
 					<div class="editButton">
 						<a href={meta.editUrl} target="_blank" rel="noopener noreferrer">
@@ -189,6 +201,12 @@
 							background-color: var(--background-v1);
 						}
 					}
+					.separator {
+						width: calc(100% - 1rem);
+						height: 0.5rem;
+						margin-bottom: 0.5rem;
+						border-bottom: 1px solid var(--border);
+					}
 				}
 			}
 			.content {
@@ -224,6 +242,9 @@
 						.label {
 							font-size: 0.8rem;
 							color: var(--text-v1);
+						}
+						.title {
+							white-space: nowrap;
 						}
 					}
 				}
@@ -268,6 +289,9 @@
 			main {
 				aside {
 					display: block;
+				}
+				.content {
+					min-width: 55rem;
 				}
 				.aside-content {
 					display: flex;

@@ -62,27 +62,40 @@ export const buildSitemap = async (
 			editUrl?: string;
 			md?: string;
 			items?: any;
-			next?: { label: string; url: string };
-			prev?: { label: string; url: string };
+			next?: { title: string; path: string };
+			prev?: { title: string; path: string };
 		}
 	>,
 	path: string,
 	filter: string[] = []
 ) => {
-	for (const [name, val] of Object.entries(sitemap || {})) {
-		if ('md' in val) {
-			const src = resolve(repoPath, val?.md || '');
-			const dest = resolve(path, basename(src));
-			if (filter?.length === 0 || filter.includes(src)) {
-				let f = await Bun.file(src).text();
-				f = `---\n${yaml.dump(val, { indent: 2 })}\neditUrl: https://github.com/${config.git.repo}/blob/main/docs/${val?.md}\n---\n${f}`;
-				console.log('Writing', dest);
-				mkdirSync(dirname(dest), { recursive: true });
-				Bun.write(dest, f);
-			}
-		} else if ('items' in val) {
-			buildSitemap(val.items, `${path}/${name}`, filter);
+	const entries = Object.entries(sitemap || {});
+	for await (const [idx, [name, val]] of entries.entries()) {
+		const src = val?.md ? resolve(repoPath, val?.md) : null;
+
+		const prev = idx <= 0 ? null : entries[idx - 1];
+		const next = idx >= entries.length - 1 ? null : entries[idx + 1];
+
+		if (prev) val.prev = { title: prev[1]?.title || '', path: `/documentation/${prev[0]}` };
+		if (next) val.next = { title: next[1]?.title || '', path: `/documentation/${next[0]}` };
+
+		if (filter?.length === 0 || (src && filter.includes(src))) {
+			const dest = resolve(path, `${name}.md`);
+			let f = src ? await Bun.file(src).text() : '';
+			f = `---\n${yaml.dump(val, { indent: 2 })}\n${val.md ? `editUrl: https://github.com/${config.git.repo}/blob/main/docs/${val.md}\n` : ''}---\n${f}`;
+			console.log('Writing', dest);
+			mkdirSync(dirname(dest), { recursive: true });
+			Bun.write(dest, f);
 		}
 	}
+
+	let exporterTS = `${entries
+		.map(([name, _], idx) => `import _${idx} from '$lib/contents/${name}.md?raw';`)
+		.join('\n')}
+	
+export default {
+${entries.map(([name, _], idx) => `  '${name}': _${idx}`).join(',\n')}
+} as Record<string, string>;`;
+	Bun.write('src/lib/content.ts', exporterTS);
 };
 await buildSitemap(sitemap, resolve('src/lib/contents'));

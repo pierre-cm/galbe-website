@@ -30,6 +30,8 @@ jobs:
         run: bun run build
       - name: Release
         run: |
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config user.name "${GITHUB_ACTOR}"
           bun run scripts/release.ts ${{ github.event.inputs.scope }}
           git push origin main
       - name: Compute version

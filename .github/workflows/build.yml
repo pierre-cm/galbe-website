@@ -1,8 +1,6 @@
 name: Build & Install
 on:
   push:
-    branches:
-      - '! main'
 jobs:
   build:
     name: Build & Install

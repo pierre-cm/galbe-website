@@ -15,7 +15,7 @@ jobs:
       GH_REPO: pierre-cm/galbe
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
     permissions:
       contents: read
       packages: write

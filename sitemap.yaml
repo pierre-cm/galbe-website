@@ -27,6 +27,7 @@ schemas:
     url: /documentation/hooks
 hooks:
   title: Hooks
+  description: "Learn how to use hooks in our web framework to perform specific actions before reaching a specific endpoint. Learn how to declare and define hooks. Find out how to share information between hooks and handlers and implement custom logic."
   md: hooks.md
   prev:
     title: Schemas
@@ -36,18 +37,28 @@ hooks:
     url: /documentation/handler
 handler:
   title: Handler
+  description: "Learn how to use handlers in Galbe framework to process requests and send responses."
   md: handler.md
   prev:
     title: Hooks
     url: /documentation/hooks
+  next:
+    title: Context
+    url: /documentation/context
+context:
+  title: Context
+  md: context.md
+  prev:
+    title: Handler
+    url: /documentation/handler
   next:
     title: Lifecycle
     url: /documentation/lifecycle
 lifecycle:
   title: Lifecycle
   prev:
-    title: Handler
-    url: /documentation/handler
+    title: Context
+    url: /documentation/context
   next:
     title: Router
     url: /documentation/router
@@ -58,11 +69,20 @@ router:
     title: Lifecycle
     url: /documentation/lifecycle
   next:
+    title: Error Handler
+    url: /documentation/error-handler
+error-handler:
+  title: Error handler
+  md: error-handler.md
+  prev:
+    title: Router
+    url: /documentation/router
+  next:
     title: Plugins
     url: /documentation/plugins
 plugins:
   title: Plugins
   md: plugins.md
   prev:
-    title: Router
-    url: /documentation/router
+    title: Error Handler
+    url: /documentation/error-handler

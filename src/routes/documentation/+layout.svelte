@@ -16,8 +16,10 @@
 		{ title: 'Schemas', ref: '/documentation/schemas' },
 		{ title: 'Hooks', ref: '/documentation/hooks' },
 		{ title: 'Handler', ref: '/documentation/handler' },
+		{ title: 'Context', ref: '/documentation/context' },
 		{ title: 'Lifecycle', ref: '/documentation/lifecycle' },
 		{ title: 'Router', ref: '/documentation/router' },
+		{ title: 'Error Handler', ref: '/documentation/error-handler' },
 		{ title: 'Plugins', ref: '/documentation/plugins' }
 	];
 

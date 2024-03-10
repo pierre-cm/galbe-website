@@ -14,7 +14,6 @@
 		{ title: 'Getting started', ref: '/documentation/getting-started' },
 		{ title: 'Lifecycle', ref: '/documentation/lifecycle' },
 		{ separator: true },
-		{ title: 'Configuration', ref: '/documentation/configuration' },
 		{ title: 'Router', ref: '/documentation/router' },
 		{ title: 'Error Handler', ref: '/documentation/error-handler' },
 		{ separator: true },

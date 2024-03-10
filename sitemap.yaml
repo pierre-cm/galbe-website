@@ -4,9 +4,6 @@ getting-started:
   md: getting-started.md
 lifecycle:
   title: Lifecycle
-configuration:
-  title: Configuration
-  md: configuration.md
 router:
   title: Router
   md: router.md

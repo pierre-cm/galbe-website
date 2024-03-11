@@ -16,7 +16,7 @@
 	hljs.registerLanguage('bash', bash);
 
 	let { content = '', lang = '', copiable = true } = $props();
-	let lineBylineCopy = lang === 'bash' || lang === 'shell';
+	let commandCopy = lang === 'bash';
 	let highlightedContent = $derived(
 		lang && hljs.getLanguage(lang) ? hljs?.highlight(content, { language: lang })?.value : content
 	);
@@ -24,15 +24,17 @@
 </script>
 
 <div class="code">
-	{#if lineBylineCopy}
+	{#if commandCopy}
 		<div class="shell-pre">
 			{#each shellCommands as line}
 				<div class="line">
-					{#if line.startsWith('#')}
+					{#if !line.startsWith('$')}
 						<pre>{@html hljs?.highlight(line, { language: lang })?.value}</pre>
 					{:else}
-						<pre class="command">{@html hljs?.highlight(line, { language: lang })?.value}</pre>
-						<div class="copy"><CopyButton text={line} width="1.25rem" height="1.25rem" /></div>
+						<pre>{@html hljs?.highlight(line, { language: lang })?.value}</pre>
+						<div class="copy">
+							<CopyButton text={line.replace(/^\$\s*/, '')} width="1.25rem" height="1.25rem" />
+						</div>
 					{/if}
 				</div>
 			{/each}
@@ -80,12 +82,6 @@
 					border-radius: 0;
 					flex-grow: 1;
 					overflow: hidden;
-
-					&.command {
-						&::before {
-							content: '$ ';
-						}
-					}
 				}
 				.copy {
 					top: -0.25rem;

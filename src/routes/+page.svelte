@@ -137,22 +137,22 @@
 					<div>
 						<div class="label">Galbe</div>
 						<Icon name="bun" />
-						<ProgressBar value={86981} max={86981} variant="fancy" title="86981 req/s" />
+						<ProgressBar value={96156} max={96156} variant="fancy" title="96156 req/s" />
 					</div>
 					<div>
 						<div class="label">Fastify</div>
 						<Icon name="bun" />
-						<ProgressBar value={73370} max={86981} variant="pale" title="73370 req/s" />
+						<ProgressBar value={68206} max={96156} variant="pale" title="68206 req/s" />
 					</div>
 					<div>
 						<div class="label">Oak</div>
 						<Icon name="deno" />
-						<ProgressBar value={37274} max={86981} variant="pale" title="37274 req/s" />
+						<ProgressBar value={36836} max={96156} variant="pale" title="36836 req/s" />
 					</div>
 					<div>
 						<div class="label">Express</div>
 						<Icon name="node" />
-						<ProgressBar value={16868} max={86981} variant="pale" title="16868 req/s" />
+						<ProgressBar value={16788} max={96156} variant="pale" title="16788 req/s" />
 					</div>
 				</div>
 			</div>
@@ -189,12 +189,12 @@
 				<h2>Extensible</h2>
 				<p>
 					Extend the features and capabilities of Galbe by choosing from our
-					<a href="plugins">plugin list</a>.
+					<a href="/documentation/plugins">plugin list</a>.
 				</p>
 				<p>
-					Can't find what you're looking for? No problem - you can easily <a href="plugins"
-						>create your own plugin</a
-					> to meet your specific needs.
+					Can't find what you're looking for? No problem - you can easily
+					<a href="/plugins"> create your own plugin </a>
+					to meet your specific needs.
 				</p>
 			</div>
 		</div>

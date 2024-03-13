@@ -189,11 +189,11 @@
 				<h2>Extensible</h2>
 				<p>
 					Extend the features and capabilities of Galbe by choosing from our
-					<a href="/documentation/plugins">plugin list</a>.
+					<a href="/plugins">plugin list</a>.
 				</p>
 				<p>
 					Can't find what you're looking for? No problem - you can easily
-					<a href="/plugins"> create your own plugin </a>
+					<a href="/documentation/plugins"> create your own plugin </a>
 					to meet your specific needs.
 				</p>
 			</div>

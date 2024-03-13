@@ -28,7 +28,7 @@
 			},
 			link: (href, title, text) => {
 				href = href.replace('.md', '');
-				let target = href.match(/^http/) ? 'taget="_blank" rel="noopener noreferrer"' : '';
+				let target = href.match(/^http/) ? 'target="_blank" rel="noopener noreferrer"' : '';
 				return `<a href="${href}" title="${title || text}" ${target}>${text}</a>`;
 			},
 			blockquote: (quote) => {

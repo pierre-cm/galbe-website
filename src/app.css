@@ -16,6 +16,7 @@
   --text: #303030;
   --text-v1: #7c7c7c;
   --border: #e2e2e2;
+  --border-v1: #c0c0c0;
   --background: #ffffff;
   --background-transparent: #fff8;
   --background-v1: #f1f1f1;
@@ -41,6 +42,7 @@ html[data-theme='dark'] {
   --text: #eeeeee;
   --text-v1: #a3a3a3;
   --border: #363636;
+  --border-v1: #535353;
   --background: #272727;
   --background-transparent: #27272788;
   --background-v1: #181818;

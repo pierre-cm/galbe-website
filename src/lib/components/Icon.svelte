@@ -13,6 +13,7 @@
 	import bun from '$lib/assets/icons/bun.svg.svelte';
 	import deno from '$lib/assets/icons/deno.svg.svelte';
 	import edit from '$lib/assets/icons/edit.svg.svelte';
+	import magnifier from '$lib/assets/icons/magnifier.svg.svelte';
 
 	const ICON_MAP: Record<string, any> = {
 		default: logo,
@@ -27,7 +28,8 @@
 		node: node,
 		bun: bun,
 		deno: deno,
-		edit: edit
+		edit: edit,
+		magnifier: magnifier
 	};
 
 	const {

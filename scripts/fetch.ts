@@ -1,7 +1,8 @@
 import yaml from 'js-yaml';
 import { readdirSync, renameSync, existsSync, rmSync, mkdirSync } from 'fs';
-import { resolve, basename, extname, dirname } from 'path';
+import { resolve, extname, dirname } from 'path';
 import config from '../config';
+import { marked } from 'marked';
 
 const isGit = extname(config?.repository || '') === '.git';
 if (isGit) {
@@ -70,6 +71,7 @@ export const buildSitemap = async (
 	filter: string[] = []
 ) => {
 	const entries = Object.entries(sitemap || {});
+	const index: Record<string, Record<string, { start: number; end: number }[]>> = {};
 	for await (const [idx, [name, val]] of entries.entries()) {
 		const src = val?.md ? resolve(repoPath, val?.md) : null;
 
@@ -81,21 +83,34 @@ export const buildSitemap = async (
 
 		if (filter?.length === 0 || (src && filter.includes(src))) {
 			const dest = resolve(path, `${name}.md`);
-			let f = src ? await Bun.file(src).text() : '';
-			f = `---\n${yaml.dump(val, { indent: 2 })}\n${val.md ? `editUrl: https://github.com/${config.git.repo}/blob/main/docs/${val.md}\n` : ''}---\n${f}`;
+			let mdCore = src ? await Bun.file(src).text() : '';
+			let mdText = (await marked.parse(mdCore)).replace(/<[^>]*>?/gm, '');
+			let md = `---\n${yaml.dump(val, { indent: 2 })}\n${val.md ? `editUrl: https://github.com/${config.git.repo}/blob/main/docs/${val.md}\n` : ''}---\n${mdCore}`;
 			console.log('Writing', dest);
 			mkdirSync(dirname(dest), { recursive: true });
-			Bun.write(dest, f);
+			Bun.write(dest, md);
+			const rgx = /[^\s_\-\/\.:,;?*"'`(){}<>\[\]@&=!#]+/gi;
+			let match;
+			while ((match = rgx.exec(mdText)) !== null) {
+				let w = match?.[0]?.toLowerCase();
+				if (!w) continue;
+				if (!index?.[w]) index[w] = {};
+				if (!index[w]?.[name]) index[w][name] = [];
+				index[w][name].push({ start: match.index, end: rgx.lastIndex });
+			}
 		}
 	}
 
-	let exporterTS = `${entries
-		.map(([name, _], idx) => `import _${idx} from '$lib/contents/${name}.md?raw';`)
-		.join('\n')}
+	Bun.write('src/lib/wordIndex.json', JSON.stringify(index));
+
+	const docNames = Object.keys(sitemap || {});
+	let exporterTS = `${docNames.map((name, idx) => `import _${idx} from '$lib/contents/${name}.md?raw';`).join('\n')}
 	
-export default {
-${entries.map(([name, _], idx) => `  '${name}': _${idx}`).join(',\n')}
-} as Record<string, string>;`;
+const content = {
+${docNames.map((name, idx) => `  '${name}': _${idx}`).join(',\n')}
+} as Record<string, string>;
+export default content;
+`;
 	Bun.write('src/lib/content.ts', exporterTS);
 };
 await buildSitemap(sitemap, resolve('src/lib/contents'));

@@ -11,6 +11,7 @@
 </script>
 
 <svelte:head>
+	<link rel="canonical" {href} />
 	<meta property="og:url" content={href} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta property="og:type" content="website" />

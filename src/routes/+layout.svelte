@@ -2,7 +2,7 @@
 	import '../app.css';
 	import Icon from '$lib/components/Icon.svelte';
 	import ThemeSwitch from '$lib/components/ThemeSwitch.svelte';
-	import { blur } from 'svelte/transition';
+	import SearchBar from '$lib/components/SearchBar.svelte';
 
 	let innerWidth = $state();
 	let menuOpen = $state(false);
@@ -47,12 +47,15 @@
 			<a href="/"><img src="/galbe.svg" alt="logo" /></a>
 		</div>
 		<div class="title"><a href="/">Galbe</a></div>
+		<SearchBar />
 		<div class="menu" class:open={menuOpen}>
 			<button class="burger" on:click={triggerMenu}>
 				<Icon name={menuOpen ? 'cross' : 'burger'} />
 			</button>
 			<nav>
-				<a href="/documentation" class:active={data.rootSlug === `documentation`}>Documentation</a>
+				<a href="/documentation/getting-started" class:active={data.rootSlug === `documentation`}>
+					Documentation
+				</a>
 				<a href="/plugins" class:active={data.rootSlug === `plugins`}>Plugins</a>
 			</nav>
 			<ThemeSwitch width="1.75rem" height="1.75rem" />
@@ -64,11 +67,9 @@
 		</div>
 	</header>
 	<main>
-		{#key data.rootSlug}
-			<div in:blur={{ delay: 200, duration: 200 }} out:blur={{ duration: 200 }}>
-				<slot />
-			</div>
-		{/key}
+		<div>
+			<slot />
+		</div>
 	</main>
 </div>
 
@@ -96,6 +97,7 @@
 			}
 		}
 		.title a {
+			padding-right: 1rem;
 			text-decoration: none;
 			color: var(--text);
 			font-size: 1.5rem;
@@ -167,6 +169,9 @@
 			gap: 1rem;
 			.logo {
 				margin-right: 0rem;
+			}
+			.title a {
+				padding-right: 0rem;
 			}
 			.menu {
 				width: fit-content;

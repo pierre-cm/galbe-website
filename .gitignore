@@ -11,3 +11,4 @@ node_modules/
 
 src/lib/contents
 src/lib/content.ts
+src/lib/wordIndex.json

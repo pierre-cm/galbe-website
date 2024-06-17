@@ -1,0 +1,12 @@
+{
+  "swagger": {
+    "name": "Swagger",
+    "repo": "https://github.com/pierre-cm/galbe-swagger.git",
+    "npm": "https://www.npmjs.com/package/galbe-swagger"
+  },
+  "jwt": {
+    "name": "JWT",
+    "repo": "https://github.com/pierre-cm/galbe-jwt.git",
+    "npm": "https://www.npmjs.com/package/galbe-jwt"
+  }
+}

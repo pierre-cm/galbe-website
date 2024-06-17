@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Markdown from '$lib/components/Markdown.svelte';
 	import Meta from '$lib/components/Meta.svelte';
-	import contents from '$lib/content';
+	import contents from '$lib/content.gen';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -113,7 +113,7 @@
 			<nav>
 				{#each aside as { ref, title, separator }}
 					{#if separator}
-						<div class="separator" />
+						<div class="separator"></div>
 					{:else}
 						<a href={ref} class:active={$page.url.pathname === ref}>{title}</a>
 					{/if}
@@ -147,7 +147,7 @@
 								<a
 									href={ref}
 									class:active={currentSection === title}
-									on:click={() => clickSection(title, ref)}
+									onclick={() => clickSection(title, ref)}
 								>
 									{title}
 								</a>

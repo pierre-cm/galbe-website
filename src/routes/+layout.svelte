@@ -17,25 +17,25 @@
 
 <svelte:head>
 	<script type="application/ld+json">
-	{
-		"@context": "https://schema.org",
-		"@type": "WebSite",
-		"name": "Galbe",
-		"alternateName": "Galbe",
-		"url": "https://galbe.dev"
-	}
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "Galbe",
+			"alternateName": "Galbe",
+			"url": "https://galbe.dev"
+		}
 	</script>
 	<script type="application/ld+json">
-	{
-		"@context": "https://schema.org",
-		"@type": "Organization",
-		"name": "Galbe",
-		"url": "https://galbe.dev",
-		"logo": "https://galve.dev/logo.png",
-		"alternateName": "Galbe",
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "Galbe",
+			"url": "https://galbe.dev",
+			"logo": "https://galve.dev/logo.png",
+			"alternateName": "Galbe",
 
-		"description": "A fast and versatile JavaScript web framework"
-	}
+			"description": "A fast and versatile JavaScript web framework"
+		}
 	</script>
 </svelte:head>
 
@@ -49,7 +49,7 @@
 		<div class="title"><a href="/">Galbe</a></div>
 		<SearchBar />
 		<div class="menu" class:open={menuOpen}>
-			<button class="burger" on:click={triggerMenu}>
+			<button class="burger" onclick={triggerMenu}>
 				<Icon name={menuOpen ? 'cross' : 'burger'} />
 			</button>
 			<nav>
@@ -151,7 +151,7 @@
 					width: 1.75rem;
 					height: 1.75rem;
 					&:hover {
-						color: var(--primary);
+						color: var(--text-v1);
 					}
 				}
 			}

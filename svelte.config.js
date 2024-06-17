@@ -9,7 +9,8 @@ const config = {
 		adapter: adapter({
 			out: 'dist',
 			envPrefix: 'GALBE_',
-			precompress: true
+			precompress: true,
+			fallback: '404.html'
 		})
 	}
 };

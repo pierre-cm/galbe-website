@@ -22,7 +22,7 @@
 	class="copy"
 	class:green={icon === 'tick'}
 	class:red={icon === 'cross'}
-	on:click={copy}
+	onclick={copy}
 	type="button"
 	title="Copy"
 >

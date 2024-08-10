@@ -1,6 +1,6 @@
 <script lang="ts">
-	import wordIndexJson from '$lib/wordIndex.json?raw';
-	import content from '$lib/content';
+	import wordIndexJson from '$lib/wordIndex.gen.json?raw';
+	import content from '$lib/content.gen';
 	import Icon from './Icon.svelte';
 	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
@@ -103,30 +103,30 @@
 
 <svelte:window on:keydown={shortcut} />
 
-<button class="search" on:click={open}>
+<button class="search" onclick={open}>
 	<Icon name="magnifier" width="1.25rem" height="1.25rem" />
 	Search
 	<div class="shortcut">Ctrl K</div>
 </button>
 {#if isOpen}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="result-background" on:click={exit}>
-		<div class="result" on:click={(e) => e.stopPropagation()}>
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<div class="result-background" onclick={exit}>
+		<div class="result" onclick={(e) => e.stopPropagation()}>
 			<div class="inputs">
 				<input
 					bind:this={searchInput}
 					type="text"
 					placeholder="Search in the doc"
-					on:input={(e) => search((e?.target as HTMLInputElement)?.value)}
+					oninput={(e) => search((e?.target as HTMLInputElement)?.value)}
 				/>
-				<button class="close" on:click={exit}><Icon name="cross" /></button>
+				<button class="close" onclick={exit}><Icon name="cross" /></button>
 			</div>
 
 			<div class="suggestions">
 				{#if results?.length}
 					{#each results as [file, matches]}
-						<div class="match" on:click={() => goToDoc(file)}>
+						<div class="match" onclick={() => goToDoc(file)}>
 							<div class="matchedFile">
 								{file[0].toUpperCase() + file.replace(/-/, ' ').slice(1)}
 							</div>
@@ -158,6 +158,7 @@
 		border: 1px solid var(--border-v1);
 		color: var(--text);
 		border-radius: 1rem;
+		font-family: 'OpenSans';
 		&:hover {
 			cursor: pointer;
 			border-color: var(--primary);

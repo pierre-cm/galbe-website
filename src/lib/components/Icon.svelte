@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte/legacy';
+	// import type { SvelteComponent } from 'svelte/legacy';
 	import github from '$lib/assets/icons/github.svg.svelte';
 	import logo from '$lib/assets/icons/logo.svg.svelte';
 	import npm from '$lib/assets/icons/npm.svg.svelte';
@@ -14,6 +14,7 @@
 	import deno from '$lib/assets/icons/deno.svg.svelte';
 	import edit from '$lib/assets/icons/edit.svg.svelte';
 	import magnifier from '$lib/assets/icons/magnifier.svg.svelte';
+	import arrow from '$lib/assets/icons/arrow.svg.svelte';
 
 	const ICON_MAP: Record<string, any> = {
 		default: logo,
@@ -29,7 +30,8 @@
 		bun: bun,
 		deno: deno,
 		edit: edit,
-		magnifier: magnifier
+		magnifier: magnifier,
+		arrow: arrow
 	};
 
 	const {
@@ -38,7 +40,7 @@
 		height = '1.75rem'
 	} = $props<{ name: string; width?: string; height?: string }>();
 
-	let icon = $state<typeof SvelteComponent>();
+	let icon = $state();
 
 	$effect(() => {
 		icon = ICON_MAP[name in ICON_MAP ? name : 'default'];

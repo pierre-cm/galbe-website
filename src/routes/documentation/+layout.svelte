@@ -23,6 +23,7 @@
 		{ title: 'Handler', ref: '/documentation/handler' },
 		{ title: 'Context', ref: '/documentation/context' },
 		{ separator: true },
+		{ title: 'CLI', ref: '/documentation/cli' },
 		{ title: 'Plugins', ref: '/documentation/plugins' }
 	];
 

@@ -144,4 +144,17 @@
 		color: var(--text-v1);
 		cursor: pointer;
 	}
+	:global(.markdown table) {
+		border-collapse: collapse;
+	}
+	:global(.markdown th) {
+		border-collapse: collapse;
+		border-bottom: 2px solid var(--border-v1);
+		text-align: left;
+		padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+	}
+	:global(.markdown td) {
+		padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+		border-bottom: 1px solid var(--border-v1);
+	}
 </style>

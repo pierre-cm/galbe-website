@@ -29,6 +29,9 @@ handler:
 context:
   title: Context
   md: context.md
+cli:
+  title: CLI
+  md: cli.md
 plugins:
   title: Plugins
   md: plugins.md

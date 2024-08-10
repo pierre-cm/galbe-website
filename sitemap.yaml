@@ -1,37 +1,48 @@
 getting-started:
   title: Getting Started
   description: Get started with Galbe. Follow our step-by-step guide to set up your development environment, create your first project, and learn the basics of building fast and versatile backend servers.
-  md: getting-started.md
+  file: getting-started.md
+  kind: doc
 lifecycle:
   title: Lifecycle
+  kind: doc
 router:
   title: Router
-  md: router.md
+  file: router.md
+  kind: doc
 error-handler:
   title: Error handler
-  md: error-handler.md
+  file: error-handler.md
+  kind: doc
 routes:
   title: Routes
   description: "Learn how to define and manage routes in Galbe. Discover how to define routes to create flexible and scalable backend applications."
-  md: routes.md
+  file: routes.md
+  kind: doc
 schemas:
   title: Schemas
   description: "Discover data validation and modeling with Galbe's Schema system. Learn how to define, validate, and transform data structures to ensure consistency and accuracy in your backend applications."
-  md: schemas.md
+  file: schemas.md
+  kind: doc
 hooks:
   title: Hooks
   description: "Learn how to use hooks in our web framework to perform specific actions before reaching a specific endpoint. Learn how to declare and define hooks. Find out how to share information between hooks and handlers and implement custom logic."
-  md: hooks.md
+  file: hooks.md
+  kind: doc
 handler:
   title: Handler
   description: "Learn how to use handlers in Galbe framework to process requests and send responses."
-  md: handler.md
+  file: handler.md
+  kind: doc
 context:
   title: Context
-  md: context.md
+  file: context.md
+  kind: doc
 cli:
   title: CLI
-  md: cli.md
+  file: cli.md
+  kind: doc
 plugins:
   title: Plugins
-  md: plugins.md
+  file: plugins.md
+  kind: doc

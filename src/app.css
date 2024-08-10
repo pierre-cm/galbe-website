@@ -20,7 +20,7 @@
   --background: #ffffff;
   --background-transparent: #fff8;
   --background-v1: #f1f1f1;
-  --background-v2: #f7f2e8;
+  --background-v2: #f7f5f1;
 
   --primary: #559ce8;
   --primary-dark: #258092;
@@ -50,7 +50,7 @@ html[data-theme='dark'] {
 }
 
 *{
-  transition: background-color 0.3s, border-color 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 body {

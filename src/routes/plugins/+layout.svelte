@@ -83,6 +83,11 @@
 			{/each}
 		</div>
 	{/if}
+	<div>
+		Want to propose a new plugin? Follow <a href="/documentation/plugins#create-a-plugin"
+			>these instructions</a
+		>.
+	</div>
 	<slot />
 </div>
 
@@ -177,13 +182,14 @@
 				justify-content: space-between;
 				align-items: flex-end;
 				margin-top: -3rem;
+				padding-bottom: 3rem;
 				padding-left: 1rem;
 				width: fit-content;
 				.social {
 					a {
 						color: var(--text);
 						&:hover {
-							color: var(--text-v1);
+							color: var(--primary);
 						}
 					}
 				}

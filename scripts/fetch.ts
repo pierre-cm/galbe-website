@@ -97,7 +97,7 @@ export const buildSitemap = async (
 		let resp = await fetch(`https://api.github.com/repos/${owner}/${repo}`, auth).then((resp) =>
 			resp.json()
 		);
-		plugins[kp].description = resp.description;
+		plugins[kp].description = plugins[kp]?.description || resp.description;
 		plugins[kp].github = resp.html_url;
 		resp = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, auth).then((resp) =>
 			resp.json()

@@ -46,3 +46,7 @@ plugins:
   title: Plugins
   file: plugins.md
   kind: doc
+contribute:
+  title: Contribute
+  file: CONTRIBUTING.md
+  kind: doc

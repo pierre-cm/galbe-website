@@ -24,7 +24,9 @@
 		{ title: 'Context', ref: '/documentation/context' },
 		{ separator: true },
 		{ title: 'CLI', ref: '/documentation/cli' },
-		{ title: 'Plugins', ref: '/documentation/plugins' }
+		{ title: 'Plugins', ref: '/documentation/plugins' },
+		{ separator: true },
+		{ title: 'Contribute', ref: '/documentation/contribute' }
 	];
 
 	let meta: Record<string, any> = $state({});

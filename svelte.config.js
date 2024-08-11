@@ -6,6 +6,9 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
+		prerender: {
+			handleMissingId: 'warn'
+		},
 		adapter: adapter({
 			out: 'dist',
 			envPrefix: 'GALBE_',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { Marked } from 'marked';
+	import { Marked, type TokensList } from 'marked';
 	import Code from './Code.svelte';
 
 	const ALERT_KEYWORDS = ['NOTE', 'TIP', 'IMPORTANT', 'WARNING', 'CAUTION'] as const;
@@ -31,17 +31,7 @@
 				let target = href.match(/^http/) ? 'target="_blank" rel="noopener noreferrer"' : '';
 				return `<a href="${href}" title="${title || text}" ${target}>${text}</a>`;
 			},
-			blockquote: (quote) => {
-				const matchAlert = quote.match(
-					new RegExp(`^<p>\\[!(${ALERT_KEYWORDS.join('|')})\\](?:<br>)?(.*)</p>`, 's')
-				);
-				if (matchAlert)
-					return `<blockquote class="alertquote ${matchAlert[1].toLowerCase()}">
-            <p class="markdown-alert-title">${ALERT_ICONS[matchAlert[1] as (typeof ALERT_KEYWORDS)[number]]}${matchAlert[1][0].toUpperCase() + matchAlert[1].toLowerCase().slice(1)}<p>
-            ${matchAlert[2]}
-          </blockquote>`;
-				else return `<blockquote>${quote}</blockquote>`;
-			}
+			blockquote: (quote) => `<blockquote>${quote}</blockquote>`
 		}
 	});
 
@@ -49,14 +39,33 @@
 	const mdTokens = $derived(marked.lexer(input));
 </script>
 
-<div class="markdown">
-	{#each mdTokens as t}
+{#snippet markdown(tokens: TokensList)}
+	{#each tokens as t}
 		{#if t.type === 'code'}
 			<Code content={t.text} lang={t.lang} />
+		{:else if t.type === 'blockquote'}
+			{@const matchAlert = t.raw.match(
+				new RegExp(`>\\s+\\[!(${ALERT_KEYWORDS.join('|')})\\]\\s*\\n(.*)`, 's')
+			)}
+			{#if matchAlert}
+				<blockquote class="alertquote {matchAlert[1].toLowerCase()}">
+					<p class="markdown-alert-title">
+						{@html ALERT_ICONS[matchAlert[1] as (typeof ALERT_KEYWORDS)[number]]}
+						{matchAlert[1][0].toUpperCase() + matchAlert[1].toLowerCase().slice(1)}
+					</p>
+					{@render markdown(marked.lexer(matchAlert[2].replace(/\n?>\s*/g, '\n')))}
+				</blockquote>
+			{:else}
+				{@html marked.parse(t.raw)}
+			{/if}
 		{:else}
 			{@html marked.parse(t.raw)}
 		{/if}
 	{/each}
+{/snippet}
+
+<div class="markdown">
+	{@render markdown(mdTokens)}
 </div>
 
 <style>

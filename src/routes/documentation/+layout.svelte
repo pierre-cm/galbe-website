@@ -12,6 +12,7 @@
 	const QUERY_HEADERS = 'main .content h2 a, main .content h3 a, main .content h4 a';
 	const aside = [
 		{ title: 'Getting started', ref: '/documentation/getting-started' },
+		{ title: 'Configuration', ref: '/documentation/configuration' },
 		{ title: 'Lifecycle', ref: '/documentation/lifecycle' },
 		{ separator: true },
 		{ title: 'Router', ref: '/documentation/router' },

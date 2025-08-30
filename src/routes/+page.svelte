@@ -13,7 +13,7 @@
 	hljs.registerLanguage('js', javascript);
 	hljs.registerLanguage('ts', typescript);
 
-	const text = `<span class="dollar">$</span>bun create galbe app\n<span class="dollar">$</span>cd app\n<span class="dollar">$</span>bun install && bun dev`;
+	const text = `<span class="dollar">$</span>bun create galbe app\n<span class="dollar">$</span>cd app\n<span class="dollar">$</span>bun i && bun dev`;
 	const simplePre =
 		`import { Galbe } from 'galbe'\n\n` +
 		`const galbe = new Galbe()\n` +
@@ -87,7 +87,7 @@
 					<div class="buttons" class:hidden={prevTextRunning}>
 						<div class="copyBtn"><CopyButton text="bun create galbe app" /></div>
 						<div class="copyBtn"><CopyButton text="cd app" /></div>
-						<div class="copyBtn"><CopyButton text="bun install && bun dev" /></div>
+						<div class="copyBtn"><CopyButton text="bun i && bun dev" /></div>
 					</div>
 				</div>
 			</div>

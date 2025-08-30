@@ -3,6 +3,11 @@ getting-started:
   description: Get started with Galbe. Follow our step-by-step guide to set up your development environment, create your first project, and learn the basics of building fast and versatile backend servers.
   file: getting-started.md
   kind: doc
+configuration:
+  title: Configuration
+  description: Explore Galbe's configuration options and learn how to customize your application settings.
+  file: configuration.md
+  kind: doc
 lifecycle:
   title: Lifecycle
   kind: doc

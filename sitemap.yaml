@@ -1,57 +1,57 @@
 getting-started:
   title: Getting Started
   description: Get started with Galbe. Follow our step-by-step guide to set up your development environment, create your first project, and learn the basics of building fast and versatile backend servers.
-  file: getting-started.md
+  file: introduction/getting-started.md
   kind: doc
 configuration:
   title: Configuration
   description: Explore Galbe's configuration options and learn how to customize your application settings.
-  file: configuration.md
+  file: reference/configuration.md
   kind: doc
 lifecycle:
   title: Lifecycle
   kind: doc
 router:
   title: Router
-  file: router.md
+  file: concepts/router.md
   kind: doc
 error-handler:
   title: Error handler
-  file: error-handler.md
+  file: concepts/error-handler.md
   kind: doc
 routes:
   title: Routes
   description: "Learn how to define and manage routes in Galbe. Discover how to define routes to create flexible and scalable backend applications."
-  file: routes.md
+  file: concepts/routes.md
   kind: doc
 schemas:
   title: Schemas
   description: "Discover data validation and modeling with Galbe's Schema system. Learn how to define, validate, and transform data structures to ensure consistency and accuracy in your backend applications."
-  file: schemas.md
+  file: concepts/schemas.md
   kind: doc
 hooks:
   title: Hooks
   description: "Learn how to use hooks in our web framework to perform specific actions before reaching a specific endpoint. Learn how to declare and define hooks. Find out how to share information between hooks and handlers and implement custom logic."
-  file: hooks.md
+  file: concepts/hooks.md
   kind: doc
 handler:
   title: Handler
   description: "Learn how to use handlers in Galbe framework to process requests and send responses."
-  file: handler.md
+  file: concepts/handler.md
   kind: doc
 context:
   title: Context
-  file: context.md
+  file: concepts/context.md
   kind: doc
 cli:
   title: CLI
-  file: cli.md
+  file: reference/cli.md
   kind: doc
 plugins:
   title: Plugins
-  file: plugins.md
+  file: concepts/plugins.md
   kind: doc
 contribute:
   title: Contribute
-  file: CONTRIBUTING.md
+  file: community/CONTRIBUTING.md
   kind: doc

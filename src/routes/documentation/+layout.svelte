@@ -5,7 +5,8 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import yaml from 'js-yaml';
+	import metadata from '$lib/meta.gen';
+	import { slugify } from '$lib/doc-links';
 
 	const META_RGX = /^---\n(.*)\n---/s;
 	const DEFAULT_PAGE = 'getting-started';
@@ -30,12 +31,24 @@
 		{ title: 'Contribute', ref: '/documentation/contribute' }
 	];
 
-	let meta: Record<string, any> = $state({});
-	let titles: { level: number; title: string; ref: string }[] = $state([]);
-	let mdCore: string = $state('');
+	// Derived rather than assigned from an $effect, so the page metadata and body
+	// are already resolved when the page is prerendered instead of only after
+	// hydration (which left every doc page sharing one generic title).
+	let currentPage = $derived($page.url.pathname.replace(/^\/documentation\/?/, '') || DEFAULT_PAGE);
+	let content = $derived(contents[currentPage] ?? '');
+	let meta: Record<string, any> = $derived(metadata[currentPage] ?? {});
+	let mdCore: string = $derived(content.replace(META_RGX, ''));
+	let titles: { level: number; title: string; ref: string }[] = $derived(
+		[...mdCore.matchAll(/\s(#+)\s+([^\n]+)/gm)].map((tm) => {
+			const title = tm[2].trim();
+			return {
+				level: tm[1].length,
+				title,
+				ref: `#${slugify(title)}`
+			};
+		})
+	);
 
-	let currentPage = $state(DEFAULT_PAGE);
-	let content = $state('');
 	let currentSection = $state();
 
 	const scrolling = () => {
@@ -61,8 +74,6 @@
 
 	$effect(() => {
 		const url = $page.url;
-		const loc = url.pathname.replace(/^\/documentation\/?/, '') || DEFAULT_PAGE;
-		if (loc !== currentPage) currentPage = loc;
 
 		setTimeout(() => {
 			const mdTitles = document.querySelectorAll(QUERY_HEADERS);
@@ -77,25 +88,6 @@
 				}
 			}
 		});
-	});
-
-	$effect(() => {
-		let c = contents[currentPage];
-		if (c && c !== content) {
-			content = c;
-
-			let mdMetaMatch = content.match(META_RGX);
-			meta = mdMetaMatch ? (yaml.load(mdMetaMatch[1]) as Record<string, any>) : {};
-			mdCore = content.replace(META_RGX, '');
-
-			let titlesMatch = mdCore.matchAll(/\s(#+)\s+([^\n]+)/gm);
-			titles = [];
-			for (let tm of titlesMatch || []) {
-				let level = tm[1].length;
-				let title = tm[2].trim();
-				titles.push({ level, title, ref: `#${title.toLowerCase().replace(/\s+/g, '-')}` });
-			}
-		}
 	});
 
 	onMount(() => {
@@ -126,7 +118,7 @@
 		</aside>
 		<div class="content">
 			{#if mdCore?.trim()}
-				<Markdown input={mdCore} />
+				<Markdown input={mdCore} base={meta.file} />
 			{/if}
 			<slot />
 			<div class="nav-buttons">

@@ -84,6 +84,7 @@ export const buildSitemap = async (
 ) => {
 	const entries = Object.entries(sitemap || {});
 	const index: Record<string, Record<string, { start: number; end: number }[]>> = {};
+	const meta: Record<string, Record<string, any>> = {};
 
 	// Plugins
 	const dest = resolve(path, 'plugins.json');
@@ -120,6 +121,15 @@ export const buildSitemap = async (
 			if (prev) val.prev = { title: prev[1]?.title || '', path: `/documentation/${prev[0]}` };
 			if (next) val.next = { title: next[1]?.title || '', path: `/documentation/${next[0]}` };
 
+			// Emitted as data so the pages don't have to ship a YAML parser to read
+			// back the front matter we just wrote.
+			meta[name] = {
+				...val,
+				...(val.file
+					? { editUrl: `https://github.com/${config.git.repo}/blob/main/docs/${val.file}` }
+					: {})
+			};
+
 			if (filter?.length === 0 || (src && filter.includes(src))) {
 				const dest = resolve(path, `${name}.md`);
 				let mdCore = src ? await Bun.file(src).text() : '';
@@ -142,6 +152,14 @@ export const buildSitemap = async (
 	}
 
 	Bun.write('src/lib/wordIndex.gen.json', JSON.stringify(index));
+
+	Bun.write(
+		'src/lib/meta.gen.ts',
+		'// This file is auto-generated. DO NOT EDIT\n' +
+			'// See scripts/fetch.ts\n' +
+			`const meta = ${JSON.stringify(meta, null, 2)} as Record<string, Record<string, any>>;\n` +
+			'export default meta;\n'
+	);
 
 	const docNames = Object.entries(sitemap || {})
 		.filter(([_, v]) => v.kind === 'doc')

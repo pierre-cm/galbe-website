@@ -1,92 +1,55 @@
 <script lang="ts">
-	import wordIndexJson from '$lib/wordIndex.gen.json?raw';
-	import content from '$lib/content.gen';
 	import Icon from './Icon.svelte';
 	import { goto } from '$app/navigation';
-	import { marked } from 'marked';
-
-	type SearchRecord = Record<string, { start: number; end: number }[]>;
+	import { loadSearchIndex, searchIndex, type Occurrence, type SearchIndex } from '$lib/search';
 
 	const MATCH_WINDOW = 28;
-	const META_RGX = /^---\n(.*)\n---/s;
-
-	const textContent: Record<string, string> = {};
-
-	(async () => {
-		for (let c of Object.entries(content)) {
-			textContent[c[0]] = (await marked.parse(c[1].replace(META_RGX, ''))).replace(
-				/<[^>]*>?/gm,
-				''
-			);
-		}
-	})();
-	const wordIndex: Record<string, SearchRecord> = JSON.parse(wordIndexJson);
 
 	let isOpen = $state(false);
-	let results = $state<[string, { start: number; end: number }[]][]>([]);
+	let results = $state<[string, Occurrence[]][]>([]);
 	let searchInput = $state<HTMLElement>();
+	let index = $state<SearchIndex>();
+	let query = $state('');
+
+	// Discards an index load that resolves after a newer keystroke.
+	let seq = 0;
+
+	const preload = () => {
+		loadSearchIndex().then((i) => (index = i));
+	};
 
 	const open = () => {
 		isOpen = true;
+		preload();
 		setTimeout(() => {
 			if (searchInput) {
 				searchInput.focus();
 			}
 		}, 0);
 	};
-	const search = (req?: string) => {
+	const search = async (req?: string) => {
+		query = req ?? '';
+		const current = ++seq;
 		if (!req) {
 			results = [];
 			return;
 		}
-		let words = req
-			.replace(/[\s_\-\/\.:,;?*"'`(){}<>\[\]@&=!#]/, ' ')
-			.trim()
-			.split(' ');
-
-		let acc: Record<string, SearchRecord> = {};
-
-		Object.entries(wordIndex).forEach(([w, v]) => {
-			for (let kw of words) {
-				let match = w.match(new RegExp(`.*(${kw.toLocaleLowerCase()}).*`));
-				if (match) {
-					for (let [f, occs] of Object.entries(v)) {
-						if (!acc?.[kw]) acc[kw] = {};
-						if (!acc?.[kw]?.[f]) {
-							acc[kw][f] = [];
-						}
-						acc[kw][f].push(...occs);
-					}
-				}
-			}
-		});
-		let intersection = Object.entries(acc).reduce((entries: any, current: any) => {
-			if (Object.keys(entries).length === 0) {
-				return current[1];
-			} else {
-				let inter = {};
-				for (let [eK, eV] of Object.entries(current[1])) {
-					if (eK in entries) {
-						//@ts-ignore
-						inter[eK] = [...entries[eK], ...eV];
-					}
-				}
-				return inter;
-			}
-		}, {});
-
-		results = Object.entries(intersection);
+		const loaded = index ?? (await loadSearchIndex());
+		if (current !== seq) return;
+		index = loaded;
+		results = searchIndex(loaded, req);
 	};
 	const exit = () => {
 		results = [];
+		query = '';
 		isOpen = false;
 	};
 	const goToDoc = (file: string) => {
 		goto(`/documentation/${file}`);
 		exit();
 	};
-	const matchedPart = (file: string, m: { start: number; end: number }) => {
-		let c = textContent[file];
+	const matchedPart = (file: string, m: Occurrence) => {
+		let c = index?.textContent[file] ?? '';
 		return `${c.substring(m.start - MATCH_WINDOW, m.start)}<span style='color:var(--primary)'>${c.substring(
 			m.start,
 			m.end
@@ -103,7 +66,7 @@
 
 <svelte:window on:keydown={shortcut} />
 
-<button class="search" onclick={open}>
+<button class="search" onclick={open} onmouseenter={preload} onfocus={preload}>
 	<Icon name="magnifier" width="1.25rem" height="1.25rem" />
 	Search
 	<div class="shortcut">Ctrl K</div>
@@ -125,12 +88,12 @@
 
 			<div class="suggestions">
 				{#if results?.length}
-					{#each results as [file, matches]}
+					{#each results as [file, matches] (file)}
 						<div class="match" onclick={() => goToDoc(file)}>
 							<div class="matchedFile">
 								{file[0].toUpperCase() + file.replace(/-/, ' ').slice(1)}
 							</div>
-							{#each matches.length > 3 ? matches.slice(0, 3) : matches as m}
+							{#each matches.length > 3 ? matches.slice(0, 3) : matches as m (`${m.start}-${m.end}`)}
 								<span class="matchedPart">{@html matchedPart(file, m)}</span>
 							{/each}
 							{#if matches.length > 3}
@@ -138,6 +101,8 @@
 							{/if}
 						</div>
 					{/each}
+				{:else if query && !index}
+					<span class="noMatch">Searching…</span>
 				{:else}
 					<span class="noMatch">No result</span>
 				{/if}

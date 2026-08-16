@@ -1,6 +1,9 @@
 <script setup lang="ts">
 	import { Marked, type TokensList } from 'marked';
 	import Code from './Code.svelte';
+	import { resolveDocLink, slugify } from '$lib/doc-links';
+
+	const { input = '', base = undefined } = $props<{ input?: string; base?: string }>();
 
 	const ALERT_KEYWORDS = ['NOTE', 'TIP', 'IMPORTANT', 'WARNING', 'CAUTION'] as const;
 	const ALERT_ICONS: Record<(typeof ALERT_KEYWORDS)[number], string> = {
@@ -18,16 +21,19 @@
 		gfm: true,
 		renderer: {
 			heading: (text, level) => {
-				let content = text;
+				// The id matches the anchor the renderer emits, so cross-page links like
+				// /documentation/schemas#body land on the section without relying on JS.
+				const slug = slugify(text);
 				if (level === 2 || level === 3)
-					content = `<a href="${`#${text.toLowerCase().replace(/\s+/g, '-')}`}">${text}</a>`;
-				return `<h${level}>${content}</h${level}>`;
+					return `<h${level} id="${slug}"><a href="#${slug}">${text}</a></h${level}>`;
+				if (level === 4) return `<h4 id="${slug}">${text}</h4>`;
+				return `<h${level}>${text}</h${level}>`;
 			},
 			codespan: (text) => {
 				return `<code>${text}</code>`;
 			},
 			link: (href, title, text) => {
-				href = href.replace('.md', '');
+				href = resolveDocLink(href, base);
 				let target = href.match(/^http/) ? 'target="_blank" rel="noopener noreferrer"' : '';
 				return `<a href="${href}" title="${title || text}" ${target}>${text}</a>`;
 			},
@@ -35,7 +41,6 @@
 		}
 	});
 
-	const { input = '' } = $props<{ input?: string }>();
 	const mdTokens = $derived(marked.lexer(input));
 </script>
 

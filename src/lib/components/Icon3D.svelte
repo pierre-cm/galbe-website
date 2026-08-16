@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import * as THREE from 'three';
-	import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+	import type * as ThreeTypes from 'three';
 	import { onMount } from 'svelte';
+	import { addFrame, type Frame } from '$lib/render-loop';
 
 	type Vec3d = {
 		x?: number;
@@ -22,102 +21,139 @@
 		rot: { x: 0, y: 0, z: 0 }
 	};
 
-	let elt: Element | undefined = $state();
+	const SIZE = 120;
+
+	let elt: HTMLDivElement | undefined = $state();
 	let {
 		name,
 		speed = 1,
 		cameraP = DEFAULT_PARAM,
 		initP = DEFAULT_PARAM,
 		updateP = DEFAULT_PARAM
-	} = $props<Props>();
+	}: Props = $props();
 
 	onMount(() => {
-		if (elt) elt.appendChild(renderer.domElement);
-	});
+		let destroyed = false;
+		let visible = false;
+		let booting = false;
+		let frame: Frame | undefined;
+		let unregister: (() => void) | undefined;
+		let renderer: ThreeTypes.WebGLRenderer | undefined;
+		let scene: ThreeTypes.Scene | undefined;
 
-	let camera: THREE.PerspectiveCamera;
-	let scene: THREE.Scene;
-	let renderer: THREE.WebGLRenderer;
-	// let cube: THREE.Mesh<THREE.BoxGeometry, THREE.MeshBasicMaterial>;
-	let loader: GLTFLoader;
-	let mixer: THREE.AnimationMixer;
+		// Only draw while the icon is on screen; the shared loop handles tab visibility.
+		const sync = () => {
+			if (destroyed) return;
+			if (visible && frame && !unregister) unregister = addFrame(frame);
+			else if ((!visible || !frame) && unregister) {
+				unregister();
+				unregister = undefined;
+			}
+		};
 
-	let model: THREE.Group<THREE.Object3DEventMap>;
+		// three.js is a large dependency, so it is fetched only once an icon is
+		// about to become visible rather than upfront with the rest of the page.
+		const boot = async () => {
+			const [THREE, { GLTFLoader }] = await Promise.all([
+				import('three'),
+				import('three/addons/loaders/GLTFLoader.js')
+			]);
+			if (destroyed) return;
 
-	if (browser) {
-		const init = () => {
 			scene = new THREE.Scene();
-			camera = new THREE.PerspectiveCamera(75, 120 / 120, 0.1, 1000);
+			const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
 			renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-			loader = new GLTFLoader();
+			renderer.setSize(SIZE, SIZE);
+			elt?.appendChild(renderer.domElement);
 
-			renderer.setSize(120, 120);
-
-			const light = new THREE.AmbientLight(0xffffff, 3.0); // soft white light
-			const dirLight = new THREE.DirectionalLight(0xffffff, 3);
-			scene.add(light);
-			scene.add(dirLight);
+			scene.add(new THREE.AmbientLight(0xffffff, 3.0));
+			scene.add(new THREE.DirectionalLight(0xffffff, 3));
 
 			camera.position.z = 8;
 			camera.position.x = cameraP.pos?.x || 0;
 			camera.position.y = cameraP.pos?.y || 0;
 			camera.position.z = cameraP.pos?.z || 0;
-			loader.load(
+
+			let mixer: ThreeTypes.AnimationMixer | undefined;
+			let model: ThreeTypes.Group | undefined;
+
+			new GLTFLoader().load(
 				`models/${name}.glb`,
-				function (gltf) {
+				(gltf) => {
+					if (destroyed) return;
 					model = gltf.scene;
 					mixer = new THREE.AnimationMixer(model);
 
 					for (const anim of gltf.animations) mixer.clipAction(anim).play();
 
-					scene.add(model);
-					// bulbGltf.rotation.z += 0.25;
+					scene?.add(model);
 					model.rotation.x = initP.rot?.x || 0;
-					model.rotation.y = initP.rot?.y || 0; // 1.8
+					model.rotation.y = initP.rot?.y || 0;
 					model.rotation.z = initP.rot?.z || 0;
 				},
 				undefined,
-				function (error) {
-					console.error(error);
-				}
+				(error) => console.error(error)
 			);
+
+			frame = (delta) => {
+				if (mixer) mixer.update(speed / delta);
+				if (model) {
+					model.rotation.x += updateP.rot?.x || 0;
+					model.rotation.y += updateP.rot?.y || 0;
+					model.rotation.z += updateP.rot?.z || 0;
+				}
+				if (renderer && scene) {
+					renderer.clear();
+					renderer.render(scene, camera);
+				}
+			};
+			sync();
 		};
 
-		const render = () => {
-			renderer.clear();
-			renderer.render(scene, camera);
+		const observer = new IntersectionObserver(
+			(entries) => {
+				visible = entries.some((e) => e.isIntersecting);
+				if (visible && !booting) {
+					booting = true;
+					boot();
+				}
+				sync();
+			},
+			{ rootMargin: '200px' }
+		);
+		if (elt) observer.observe(elt);
+
+		return () => {
+			destroyed = true;
+			observer.disconnect();
+			unregister?.();
+			unregister = undefined;
+
+			// Without this the WebGL context and its buffers survive client-side
+			// navigation, and the browser starts dropping the oldest contexts.
+			scene?.traverse((obj) => {
+				const mesh = obj as Partial<ThreeTypes.Mesh>;
+				mesh.geometry?.dispose();
+				const material = mesh.material;
+				if (Array.isArray(material)) material.forEach((m) => m.dispose());
+				else material?.dispose();
+			});
+			renderer?.dispose();
+			renderer?.forceContextLoss();
+			renderer?.domElement.remove();
+			renderer = undefined;
+			scene = undefined;
 		};
-
-		let pT = 0;
-		let delta = 0;
-		const animate = () => {
-			requestAnimationFrame(animate);
-			let cT = performance.now();
-			delta = cT - pT;
-
-			if (mixer) mixer.update(speed / delta);
-			if (model) {
-				model.rotation.x += updateP.rot?.x || 0;
-				model.rotation.y += updateP.rot?.y || 0; // 0.005
-				model.rotation.z += updateP.rot?.z || 0;
-			}
-
-			pT = cT;
-			render();
-		};
-
-		init();
-		animate();
-	}
+	});
 </script>
 
-<div class="icon3d" bind:this={elt} />
+<div class="icon3d" bind:this={elt}></div>
 
 <style lang="scss">
 	.icon3d {
-		// display: flex;
-		// justify-content: center;
-		// align-items: center;
+		// Reserved upfront so lazily-created canvases do not shift the layout.
+		width: 120px;
+		height: 120px;
 		filter: drop-shadow(24px 12px 7px #00000025);
 	}
 </style>

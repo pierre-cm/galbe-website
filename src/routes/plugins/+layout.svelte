@@ -4,7 +4,6 @@
 	import Markdown from '$lib/components/Markdown.svelte';
 	import Meta from '$lib/components/Meta.svelte';
 	import plugins_json from '$lib/contents/plugins.json';
-	import yaml from 'js-yaml';
 
 	const META_RGX = /^---\n(.*)\n---/s;
 
@@ -12,7 +11,6 @@
 	let mdPage: string = $state('');
 	let currentPage = $state('');
 	let content = $state('');
-	let meta: Record<string, any> = $state({});
 
 	$effect(() => {
 		const url = $page.url;
@@ -24,15 +22,12 @@
 		if (!(currentPage in plugins)) {
 			currentPage = '';
 			content = '';
-			meta = {};
 			mdPage = '';
 		}
 		//@ts-ignore
 		let c = plugins[currentPage]?.readme || '';
 		content = c;
 
-		let mdMetaMatch = content.match(META_RGX);
-		meta = mdMetaMatch ? (yaml.load(mdMetaMatch[1]) as Record<string, any>) : {};
 		mdPage = content.replace(META_RGX, '');
 	});
 </script>
@@ -84,7 +79,7 @@
 		</div>
 	{/if}
 	<div>
-		Want to propose a new plugin? Follow <a href="/documentation/plugins#create-a-plugin"
+		Want to propose a new plugin? Follow <a href="/documentation/plugins#how-to-create-a-plugin"
 			>these instructions</a
 		>.
 	</div>

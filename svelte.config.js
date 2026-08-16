@@ -7,7 +7,11 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		prerender: {
-			handleMissingId: 'warn'
+			handleMissingId: 'warn',
+			// The documentation markdown is pulled from the framework repo and still
+			// contains links relative to that repo's layout. They 404 on the site, but
+			// they should not fail the build.
+			handleHttpError: 'warn'
 		},
 		adapter: adapter({
 			out: 'dist',

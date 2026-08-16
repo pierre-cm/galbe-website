@@ -12,4 +12,5 @@ node_modules/
 
 src/lib/contents
 src/lib/content.gen.ts
+src/lib/meta.gen.ts
 src/lib/wordIndex.gen.json
